@@ -9,6 +9,8 @@ Created on Mon Apr 17 16:51:49 2023
 import xarray as xr
 import matplotlib.pyplot as plt
 
+import sys
+sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
 from functions_reading_files import *
 from functions_correcting_time import * 
 from functions_plotting import * 
@@ -31,7 +33,6 @@ for var, var_num in zip(varlist, var_num_list):
         ds_var_irri=single_var_data
     else:
         ds_var_irri=xr.merge([ds_var_irri, single_var_data])
-ds_var_irri=xr.merge([ds_var_irri, irrifrac])
 dsirr_newtime = correct_timedim(ds_var_irri)
 
 month_name='June'

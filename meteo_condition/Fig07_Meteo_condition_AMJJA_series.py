@@ -13,6 +13,8 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.ticker as mtick 
 
+import sys
+sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
 from functions_reading_files import *
 from functions_correcting_time import * 
 from functions_plotting import * 

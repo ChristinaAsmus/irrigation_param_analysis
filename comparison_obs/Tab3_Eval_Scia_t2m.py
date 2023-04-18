@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 16:53:56 2023
+Created on Fri Sep 30 08:39:48 2022
 
 @author: g300099
 
-appendix station location for comparison with observation data
-"""
+This program evaluates the REMO model results with the data from scia 
+http://193.206.192.214/servertsutm/serietemporali400.php 
 
+"""
 
 import xarray as xr 
 import numpy as np
 import pandas as pd
+import cartopy.crs as ccrs 
 import cartopy.feature as cfeature
 import matplotlib.pyplot as plt
 import glob
 
+import sys
+sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
 from functions_reading_files import *
 from functions_correcting_time import * 
 from functions_plotting import * 
@@ -23,14 +27,30 @@ from functions_calculations import *
 from functions_rotation import *
 from functions_idw import *
 
+
+
+
+# In[]: variables to analyze
+
+
+# define variabe to analyse 
+#var='T2M_MEAN'
+#varremo='TEMP2'
+
+#var='T2M_MAXMEAN'
+#varremo='T2MAX'
+
+#var='T2M_MINMEAN'
+#varremo='T2MIN'
+
 varlist=['T2M_MEAN','T2M_MAXMEAN','T2M_MINMEAN']
 varremolist=['TEMP2','T2MAX','T2MIN']
 
 for var, varremo in zip(varlist, varremolist): 
-    print('Calculating variable:', varremo)
+    print('Calculatin variable:', varremo)
     
     
-    # read station data
+    # In[]: read station data
     
     if varremo=='TEMP2':
         filetype='mfiles'
@@ -68,7 +88,7 @@ for var, varremo in zip(varlist, varremolist):
     
     df_data=pd.concat(data,axis=0,ignore_index=True)
     
-    # station data | extract month data, merge lon & lat to data, renaming
+    # In[]: station data | extract month data, merge lon & lat to data, renaming
     
     #month=8
     monthlist=[4,5,6,7,8]
@@ -99,7 +119,7 @@ for var, varremo in zip(varlist, varremolist):
             print('ATTENTION: var is wrong set!')
         station_data.drop_duplicates(ignore_index=True)
         
-        #  remo data | read files
+        # In[]: remo data | read files
         
         exp_number_irri='067016' 
         exp_number_noirri='067015'
@@ -143,7 +163,7 @@ for var, varremo in zip(varlist, varremolist):
             print('Your variable is wrong! Var:',varremo)
             
         
-        # rotate station coordinates 
+        # In[]: rotate station coordinates 
         # delete duplicates, one station hats2 different entries as mean values (t2mean)--> had to be deleted
         if var=='T2M_MEAN':
            station_data_sel=station_data[['t2mean','latitude','longitude']].drop_duplicates(ignore_index=True)
@@ -175,7 +195,7 @@ for var, varremo in zip(varlist, varremolist):
         da_stations=df_stations.to_xarray().astype('float64')
         
         
-        # filter data with irrigated fraction 
+        # In[]: filter data with irrigated fraction 
         
         remo_irri_data_cut=remo_irri_data.isel(rlat=slice(50,70),rlon=slice(60,110))
         remo_noirri_data_cut=remo_noirri_data.isel(rlat=slice(50,70),rlon=slice(60,110))
@@ -192,7 +212,7 @@ for var, varremo in zip(varlist, varremolist):
         remo_irri_data_filtered=remo_irri_data_cut.where(remo_irri_data_cut.IRRIFRAC>remo_irri_data_irrifrac.IRRIFRAC.mean().values)
         remo_noirri_data_filtered=remo_noirri_data_cut.where(remo_noirri_data_cut.IRRIFRAC>remo_noirri_data_irrifrac.IRRIFRAC.mean().values)
         
-        # IDW interpolation for model data to station location 
+        # In[]: IDW interpolation for model data to station location 
         
         # station positions as target positions
         rlat_target=station_data_corr.rlat.values
@@ -213,7 +233,54 @@ for var, varremo in zip(varlist, varremolist):
         # count used values
         station_numb=np.sum(~np.isnan(df_inttemp_irri.temp2m.values))
         print('station number:',station_numb)
-
+        
+  
+        # In[]: calculate BIAS / difference between int. REMO TEMP2 mean monthly and OBS 
+        
+        output_dir='/work/ch0636/g300099/EVALUATION/TESTALL/'
+        
+        df_inttemp_irri_prep=df_inttemp_irri.set_index(['rlat','rlon']).rename(columns={"temp2m": "temp2m_remo_irri"})
+        df_inttemp_noirri_prep=df_inttemp_noirri.set_index(['rlat','rlon']).rename(columns={"temp2m": "temp2m_remo_noirri"})
+        if var == 'T2M_MEAN': 
+            df_all=pd.concat([df_inttemp_irri_prep, df_inttemp_noirri_prep, df_stations], axis=1, join="inner").rename(columns={"t2mean": "temp2m_station"})\
+                .drop(columns='index').dropna(axis=0)
+        elif var == 'T2M_MINMEAN': 
+            df_all=pd.concat([df_inttemp_irri_prep, df_inttemp_noirri_prep, df_stations], axis=1, join="inner").rename(columns={"t2min": "temp2m_station"})\
+                .drop(columns='index').dropna(axis=0)
+        elif var == 'T2M_MAXMEAN': 
+            df_all=pd.concat([df_inttemp_irri_prep, df_inttemp_noirri_prep, df_stations], axis=1, join="inner").rename(columns={"t2max": "temp2m_station"})\
+                .drop(columns='index').dropna(axis=0)
+        else: 
+            print('check your variable. Nothing to rename')
+        
+        #Dataframe for irrigated and not irrigated 
+        df_all['BIAS_irri']=df_all.temp2m_remo_irri-df_all.temp2m_station
+        df_all['BIAS_noirri']=df_all.temp2m_remo_noirri-df_all.temp2m_station
+        
+        df_all.to_csv(output_dir+'stations_bias_'+str(var)+'_20170'+str(month)+'.csv')
+        
+        mean_bias_irri=df_all.BIAS_irri.mean(axis = 0, skipna = True)
+        mean_bias_noirri=df_all.BIAS_noirri.mean(axis = 0, skipna = True)
+        
+        df_mean=pd.DataFrame({'mean_bias_irri':[mean_bias_irri],'mean_bias_noirri':[mean_bias_noirri]})
+        df_mean.to_csv(output_dir+'mean_bias_'+str(var)+'_20170'+str(month)+'.csv')
+        
+        print('mean BIAS irri', mean_bias_irri)
+        print('mean BIAS noirri', mean_bias_noirri)
+        
+        # In[]: check significance   
+        import researchpy as rp 
+           
+        # ttest 
+        data_irri= df_all.BIAS_irri
+        data_noirri = df_all.BIAS_noirri
+        
+        summary, results=rp.ttest(group1=data_irri, group1_name='irri', group2=data_noirri, group2_name='noirri')
+        summary.to_csv(output_dir+'ttest_summary'+str(var)+'_20170'+str(month)+'.csv')
+        results.to_csv(output_dir+'ttest_results'+str(var)+'_20170'+str(month)+'.csv')
+        
+         # In[]: plot selected stations locations on basis of remo data with idw
+    
     irrifrac=irrifrac.where(irrifrac>0)
     
     fig1=plt.figure(figsize=(10,3))
@@ -240,4 +307,5 @@ for var, varremo in zip(varlist, varremolist):
     #plt.savefig('/work/ch0636/g300099/EVALUATION/plots/Eval_Scia_stations_location_selected_'+str(var)+'_new.png',dpi=300, bbox_inches='tight')
      
     
-       
+        
+        
