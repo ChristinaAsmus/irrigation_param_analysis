@@ -1,0 +1,198 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Apr 17 16:09:10 2023
+
+@author: g300099
+"""
+
+
+import xarray as xr
+import matplotlib.pyplot as plt
+
+from functions_reading_files import *
+from functions_correcting_time import * 
+from functions_plotting import * 
+
+# In[]: appendix for schemes 
+
+# read data 
+
+year=2017
+month=6
+
+exp_number_noirri='067015'
+exp_number_irri_prescribed='067020'
+exp_number_irri_flextime='067019'
+exp_number_irri_adapt='067017'
+
+# background map: irrifrac
+remo_dir = '/work/ch0636/g300099/SIMULATIONS/GAR11/remo_results/067016/2017/xt/'
+remo_files = 'e067016t2017060100.nc'
+remo_tfile = xr.open_dataset(remo_dir+remo_files)
+irrifrac=remo_tfile.IRRIFRAC[0]
+
+
+varlist=[ 'WSECHIRR','WSMXIRR','TSECHIRR']
+var_num_list=['701', '728', '732']
+for var, var_num in zip(varlist, var_num_list): 
+    single_var_data_adapt=read_efiles(var, var_num, exp_number_irri_adapt, year, month)
+    single_var_data_prescribed=read_efiles(var, var_num, exp_number_irri_prescribed, year, month)
+    single_var_data_flextime=read_efiles(var, var_num, exp_number_irri_flextime, year, month)
+    single_var_data_noirri=read_efiles(var, var_num, exp_number_noirri, year, month)
+    if var==varlist[0]: 
+        ds_var_irri_adapt=single_var_data_adapt
+        ds_var_irri_prescribed=single_var_data_prescribed
+        ds_var_irri_flextime=single_var_data_flextime
+        ds_var_noirri=single_var_data_noirri
+    else:
+        ds_var_irri_adapt=xr.merge([ds_var_irri_adapt, single_var_data_adapt])
+        ds_var_irri_prescribed=xr.merge([ds_var_irri_prescribed, single_var_data_prescribed])
+        ds_var_irri_flextime=xr.merge([ds_var_irri_flextime, single_var_data_flextime])
+        ds_var_noirri=xr.merge([ds_var_noirri, single_var_data_noirri])
+ds_var_noirri=xr.merge([ds_var_noirri, irrifrac])
+ds_var_irri_flextime=xr.merge([ds_var_irri_flextime, irrifrac])
+ds_var_irri_adapt=xr.merge([ds_var_irri_adapt, irrifrac])
+ds_var_irri_prescribed=xr.merge([ds_var_irri_prescribed, irrifrac])
+
+dsirr_adapt = correct_timedim(ds_var_irri_adapt)
+dsirr_flextime=correct_timedim(ds_var_irri_flextime)
+dsirr_prescribed=correct_timedim(ds_var_irri_prescribed)
+dsnoirr=correct_timedim(ds_var_noirri)
+
+# In[]: define plot directory
+
+dir_out='/work/ch0636/g300099/SIMULATIONS/GAR11/plot/plot_for_paper1/'
+# Differences between scheme effects
+# In[]: 
+# wsechirr 
+var_ws='WSECHIRR'
+var_ws_prescribed_diff=dsirr_prescribed[var_ws].mean('time')-dsnoirr[var_ws].mean('time')
+var_ws_flextime_diff=dsirr_flextime[var_ws].mean('time')-dsnoirr[var_ws].mean('time')
+var_ws_adapt_diff=dsirr_adapt[var_ws].mean('time')-dsnoirr[var_ws].mean('time')
+
+
+# tsechirr 
+var_ts='TSECHIRR'
+var_ts_prescribed_diff=dsirr_prescribed[var_ts].mean('time')-dsnoirr[var_ts].mean('time')
+var_ts_flextime_diff=dsirr_flextime[var_ts].mean('time')-dsnoirr[var_ts].mean('time')
+var_ts_adapt_diff=dsirr_adapt[var_ts].mean('time')-dsnoirr[var_ts].mean('time')
+
+
+
+# spatial plot for supplement: soil moisture difference between schemes and not irrigated 
+#wsechirr
+fig = plt.figure(figsize=(18, 12))
+
+
+params = {'legend.fontsize':18,
+          'legend.markerscale':15,
+          'axes.labelsize': 18,
+          'axes.titlesize':18, 
+          'xtick.labelsize':16,
+          'ytick.labelsize':16}
+plt.rcParams.update(params)
+
+
+ax1 = fig.add_subplot(2, 3, 1, projection=rotated_pole)
+cax1= fig.add_axes([0.127, 0.52, 0.22, 0.02]) 
+levels1=[ -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6,]
+ticks1=[ -0.6,  -0.4,  -0.2,  0.2, 0.4,  0.6]
+#wsechirr prescribed
+plot_rotvar(fig, var_ws_prescribed_diff, ax1, cax1, '[Δm]', 'soil moisture [Δm] ','RdBu_r',\
+            levels1, ticks1,'both' , cbar_orient='horizontal')
+
+ax2 = fig.add_subplot(2, 3, 2, projection=rotated_pole)
+cax2= fig.add_axes([0.4, 0.52, 0.22, 0.02]) 
+#wsechirr flextime
+plot_rotvar(fig, var_ws_flextime_diff, ax2, cax2, '[Δm]', 'soil moisture [Δm] ','RdBu_r',\
+            levels1, ticks1,'both', cbar_orient='horizontal' )
+    
+ax3 = fig.add_subplot(2, 3, 3, projection=rotated_pole)
+cax3= fig.add_axes([0.677, 0.52, 0.215, 0.02])
+#wsechirr adapt 
+plot_rotvar(fig, var_ws_adapt_diff, ax3, cax3, '[Δm]', 'soil moisture [Δm] ','RdBu_r',\
+            levels1, ticks1,'both', cbar_orient='horizontal' )
+
+#tsechirr
+ax4 = fig.add_subplot(2, 3, 4, projection=rotated_pole)
+cax4= fig.add_axes([0.127, 0.11, 0.22, 0.02]) 
+levels4=[-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]
+ticks4=levels4
+#tsechirr adapt 
+plot_rotvar(fig, var_ts_prescribed_diff, ax4, cax4, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
+            levels4, ticks4,'both', cbar_orient='horizontal' )
+
+ax5 = fig.add_subplot(2, 3, 5, projection=rotated_pole)
+cax5= fig.add_axes([0.4, 0.11, 0.22, 0.02]) 
+#tsechirr adapt 
+plot_rotvar(fig, var_ts_flextime_diff, ax5, cax5, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
+            levels4,ticks4, 'both', cbar_orient='horizontal' )
+    
+ax6 = fig.add_subplot(2, 3, 6, projection=rotated_pole)
+cax6= fig.add_axes([0.678, 0.11, 0.22, 0.02])
+#tsechirr adapt 
+plot_rotvar(fig, var_ts_adapt_diff, ax6, cax6, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
+            levels4, ticks4,'both', cbar_orient='horizontal' )
+#plt.show()
+#plt.savefig(str(dir_out)+'/app_schemes_tsechirr_diff_'+str(month)+'spatial.png',dpi=300, bbox_inches='tight')
+
+####### diff between schemes 
+
+
+# difference between schemes 
+var_ws_flextime_prescribed=dsirr_flextime[var_ws].mean('time')-dsirr_prescribed[var_ws].mean('time')
+var_ws_adapt_prescribed=dsirr_adapt[var_ws].mean('time')-dsirr_prescribed[var_ws].mean('time')
+#differences between schemes
+var_ts_flextime_prescribed=dsirr_flextime[var_ts].mean('time')-dsirr_prescribed[var_ts].mean('time')
+var_ts_adapt_prescribed=dsirr_adapt[var_ts].mean('time')-dsirr_prescribed[var_ts].mean('time')
+
+
+fig = plt.figure(figsize=(12, 12))
+# ax1 = fig.add_subplot(2, 2, 1, projection=rotated_pole)
+# cax1 = fig.add_axes([0.148, 0.01, 0.19, 0.04])
+# levels1=[ -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
+# ticks1=[ -0.6,-0.4, -0.2,  0.2,  0.4, 0.6]
+# #wsechirr prescribed
+# plot_rotvar(fig, var_ws_prescribed_diff, ax1, cax1, '[Δm]', 'soil moisture [Δm] ','RdBu_r',\
+#             levels1,ticks1, 'both' , cbar_orient='horizontal')
+#wsechirr
+
+ax2 = fig.add_subplot(2, 2, 1, projection=rotated_pole)
+cax2 = fig.add_axes([0.12, 0.51, 0.35, 0.02])
+levels2=[-0.1, -0.08, -0.06, -0.04,-0.02, 0.02, 0.04, 0.06, 0.08, 0.1]
+ticks2=[-0.08,  -0.04, 0.04, 0.08]
+#wsechirr flextime
+plot_rotvar(fig, var_ws_flextime_prescribed, ax2, cax2, '[Δm]', 'soil moisture [Δm] ','RdBu_r',\
+            levels2, ticks2,'both', cbar_orient='horizontal' )
+    
+ax3 = fig.add_subplot(2, 2, 2, projection=rotated_pole)
+cax3 = fig.add_axes([0.55, 0.51, 0.35, 0.02])
+#wsechirr adapt 
+plot_rotvar(fig, var_ws_adapt_prescribed, ax3, cax3, '[Δm]', 'soil moisture [Δm] ','RdBu_r',\
+            levels2, ticks2,'both', cbar_orient='horizontal' )
+
+# tsechirr
+# ax1 = fig.add_subplot(1, 3, 1, projection=rotated_pole)
+# cax1 = fig.add_axes([0.148, 0.01, 0.19, 0.04])
+# levels1=[-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]
+# ticks1=levels1
+# #tsechirr adapt 
+# plot_rotvar(fig, var_ts_prescribed_diff, ax1, cax1, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
+#             levels1, ticks1,'both' , cbar_orient='horizontal')
+
+ax5 = fig.add_subplot(2, 2, 3, projection=rotated_pole)
+cax5 = fig.add_axes([0.12, 0.1, 0.35, 0.02])
+levels5=[-0.5, -0.4, -0.3, -0.2, -0.1, 0.1, 0.2, 0.3, 0.4, 0.5]
+ticks5=[ -0.4,  -0.2,  0.2,  0.4]
+#tsechirr adapt 
+plot_rotvar(fig, var_ts_flextime_prescribed, ax5, cax5, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
+            levels5,ticks5, 'both', cbar_orient='horizontal' )
+    
+ax6 = fig.add_subplot(2, 2, 4, projection=rotated_pole)
+cax6 = fig.add_axes([0.55, 0.1, 0.35, 0.02])
+#tsechirr adapt 
+plot_rotvar(fig, var_ts_adapt_prescribed, ax6, cax6, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
+            levels5, ticks5,'both', cbar_orient='horizontal' )
+#plt.show()
+#plt.savefig(str(dir_out)+'/app_schemes_tsechirr_diff_prescribed_flextime_adapt_'+str(month)+'spatial.png',dpi=300, bbox_inches='tight')
