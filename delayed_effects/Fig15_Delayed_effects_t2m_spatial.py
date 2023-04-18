@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 15:00:47 2023
-
-@author: g300099
+creates Fig 15 
+creates spatial plot of temperature effects during the heatwave 
 """
 import xarray as xr
 import numpy as np

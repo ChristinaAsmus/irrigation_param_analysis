@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 11:28:27 2023
-
-@author: g300099
+creates Fig 05 
+creates plot of irrigation water used for different water application schemes
 """
 
 

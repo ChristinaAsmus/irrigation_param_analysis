@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 16:06:33 2023
+creates Fig A2:
+plotting of soil moisture (wsechirr, wsmx), drainage (DRAINIRR) and runoff (RUNOFFIR) 
+for the irrigated fraction as time series for test month June for all water application schemes
 
-@author: g300099
 """
 
 import xarray as xr

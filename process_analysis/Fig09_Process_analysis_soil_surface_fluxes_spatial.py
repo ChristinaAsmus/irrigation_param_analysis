@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 13:55:14 2023
-
-@author: g300099
+creates Fig 9 
+creates spatial plot of irrigation effects on sensible & latent heat flux and Bowen ratio
 """
 
 

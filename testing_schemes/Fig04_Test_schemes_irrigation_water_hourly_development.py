@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 11:20:09 2023
-
-@author: g300099
+creates Fig 04 
+creates subplot with increase of soil moisture development and hourly irrigation distribution of the different water application schemes  
 """
 
 

@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 16:53:56 2023
-
-@author: g300099
-
-appendix station location for comparison with observation data
+creates Fig C1 
+plotting of station locations used for comparison with observation data
+Be aware that the stations are not the same for T2MAX, T2MIN and TEMP2!
 """
 
 

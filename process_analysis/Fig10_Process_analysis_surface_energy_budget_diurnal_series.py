@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 14:04:53 2023
-
-@author: g300099
+creates Fig 10 
+creates diurnal time series of irrigation effects on the surface energy balance
 """
 
 

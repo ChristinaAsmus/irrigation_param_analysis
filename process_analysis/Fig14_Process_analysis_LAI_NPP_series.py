@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 14:44:36 2023
-
-@author: g300099
+creates Fig 14
+creates time series plots of LAI and NPP 
 """
 
 

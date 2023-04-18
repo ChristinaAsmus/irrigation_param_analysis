@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 14:26:02 2023
+creates Fig 11 
+creates spatial plot (mean), boxplot for diurnal cycle and time series for annaul cycle for 2m temperature and 2m relative humdity 
 
-@author: g300099
 """
 
 

@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 10:57:02 2023
+creates Fig03 
+plottin gof the model domain together with its analysis regions and example grid cell used in 4.2. 
 
-@author: g300099
-
-plotting routines for Fig03 
 """
 
 

@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 16:09:10 2023
-
-@author: g300099
+creates Fig A3 and A4 
+plotting of irrigation effects on soil moisture and surface temperature using the different water application schemes
 """
 
 
@@ -65,14 +64,14 @@ dsnoirr=correct_timedim(ds_var_noirri)
 # In[]: define plot directory
 
 dir_out='/work/ch0636/g300099/SIMULATIONS/GAR11/plot/plot_for_paper1/'
-# Differences between scheme effects
+
 # In[]: 
+####################### diff between schemes and not irrigated ###############################
 # wsechirr 
 var_ws='WSECHIRR'
 var_ws_prescribed_diff=dsirr_prescribed[var_ws].mean('time')-dsnoirr[var_ws].mean('time')
 var_ws_flextime_diff=dsirr_flextime[var_ws].mean('time')-dsnoirr[var_ws].mean('time')
 var_ws_adapt_diff=dsirr_adapt[var_ws].mean('time')-dsnoirr[var_ws].mean('time')
-
 
 # tsechirr 
 var_ts='TSECHIRR'
@@ -80,13 +79,8 @@ var_ts_prescribed_diff=dsirr_prescribed[var_ts].mean('time')-dsnoirr[var_ts].mea
 var_ts_flextime_diff=dsirr_flextime[var_ts].mean('time')-dsnoirr[var_ts].mean('time')
 var_ts_adapt_diff=dsirr_adapt[var_ts].mean('time')-dsnoirr[var_ts].mean('time')
 
-
-
-# spatial plot for supplement: soil moisture difference between schemes and not irrigated 
-#wsechirr
+# subplot 
 fig = plt.figure(figsize=(18, 12))
-
-
 params = {'legend.fontsize':18,
           'legend.markerscale':15,
           'axes.labelsize': 18,
@@ -94,54 +88,50 @@ params = {'legend.fontsize':18,
           'xtick.labelsize':16,
           'ytick.labelsize':16}
 plt.rcParams.update(params)
-
-
+#wsechirr prescribed
 ax1 = fig.add_subplot(2, 3, 1, projection=rotated_pole)
 cax1= fig.add_axes([0.127, 0.52, 0.22, 0.02]) 
 levels1=[ -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6,]
 ticks1=[ -0.6,  -0.4,  -0.2,  0.2, 0.4,  0.6]
-#wsechirr prescribed
 plot_rotvar(fig, var_ws_prescribed_diff, ax1, cax1, '[Δm]', 'soil moisture [Δm] ','RdBu_r',\
             levels1, ticks1,'both' , cbar_orient='horizontal')
 
+#wsechirr flextime
 ax2 = fig.add_subplot(2, 3, 2, projection=rotated_pole)
 cax2= fig.add_axes([0.4, 0.52, 0.22, 0.02]) 
-#wsechirr flextime
 plot_rotvar(fig, var_ws_flextime_diff, ax2, cax2, '[Δm]', 'soil moisture [Δm] ','RdBu_r',\
             levels1, ticks1,'both', cbar_orient='horizontal' )
-    
+
+#wsechirr adapt     
 ax3 = fig.add_subplot(2, 3, 3, projection=rotated_pole)
 cax3= fig.add_axes([0.677, 0.52, 0.215, 0.02])
-#wsechirr adapt 
 plot_rotvar(fig, var_ws_adapt_diff, ax3, cax3, '[Δm]', 'soil moisture [Δm] ','RdBu_r',\
             levels1, ticks1,'both', cbar_orient='horizontal' )
 
 #tsechirr
+#tsechirr prescribed
 ax4 = fig.add_subplot(2, 3, 4, projection=rotated_pole)
 cax4= fig.add_axes([0.127, 0.11, 0.22, 0.02]) 
 levels4=[-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]
 ticks4=levels4
-#tsechirr adapt 
 plot_rotvar(fig, var_ts_prescribed_diff, ax4, cax4, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
             levels4, ticks4,'both', cbar_orient='horizontal' )
 
+#tsechirr flextime 
 ax5 = fig.add_subplot(2, 3, 5, projection=rotated_pole)
 cax5= fig.add_axes([0.4, 0.11, 0.22, 0.02]) 
-#tsechirr adapt 
 plot_rotvar(fig, var_ts_flextime_diff, ax5, cax5, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
             levels4,ticks4, 'both', cbar_orient='horizontal' )
-    
+
+#tsechirr adapt 
 ax6 = fig.add_subplot(2, 3, 6, projection=rotated_pole)
 cax6= fig.add_axes([0.678, 0.11, 0.22, 0.02])
-#tsechirr adapt 
 plot_rotvar(fig, var_ts_adapt_diff, ax6, cax6, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
             levels4, ticks4,'both', cbar_orient='horizontal' )
 #plt.show()
 #plt.savefig(str(dir_out)+'/app_schemes_tsechirr_diff_'+str(month)+'spatial.png',dpi=300, bbox_inches='tight')
 
-####### diff between schemes 
-
-
+############################## diff between schemes ####################### 
 # difference between schemes 
 var_ws_flextime_prescribed=dsirr_flextime[var_ws].mean('time')-dsirr_prescribed[var_ws].mean('time')
 var_ws_adapt_prescribed=dsirr_adapt[var_ws].mean('time')-dsirr_prescribed[var_ws].mean('time')
@@ -151,49 +141,48 @@ var_ts_adapt_prescribed=dsirr_adapt[var_ts].mean('time')-dsirr_prescribed[var_ts
 
 
 fig = plt.figure(figsize=(12, 12))
+# #wsechirr prescribed
 # ax1 = fig.add_subplot(2, 2, 1, projection=rotated_pole)
 # cax1 = fig.add_axes([0.148, 0.01, 0.19, 0.04])
 # levels1=[ -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
 # ticks1=[ -0.6,-0.4, -0.2,  0.2,  0.4, 0.6]
-# #wsechirr prescribed
 # plot_rotvar(fig, var_ws_prescribed_diff, ax1, cax1, '[Δm]', 'soil moisture [Δm] ','RdBu_r',\
 #             levels1,ticks1, 'both' , cbar_orient='horizontal')
 #wsechirr
-
+#wsechirr flextime-prescribed
 ax2 = fig.add_subplot(2, 2, 1, projection=rotated_pole)
 cax2 = fig.add_axes([0.12, 0.51, 0.35, 0.02])
 levels2=[-0.1, -0.08, -0.06, -0.04,-0.02, 0.02, 0.04, 0.06, 0.08, 0.1]
 ticks2=[-0.08,  -0.04, 0.04, 0.08]
-#wsechirr flextime
 plot_rotvar(fig, var_ws_flextime_prescribed, ax2, cax2, '[Δm]', 'soil moisture [Δm] ','RdBu_r',\
             levels2, ticks2,'both', cbar_orient='horizontal' )
-    
+
+#wsechirr adapt-prescribed     
 ax3 = fig.add_subplot(2, 2, 2, projection=rotated_pole)
 cax3 = fig.add_axes([0.55, 0.51, 0.35, 0.02])
-#wsechirr adapt 
 plot_rotvar(fig, var_ws_adapt_prescribed, ax3, cax3, '[Δm]', 'soil moisture [Δm] ','RdBu_r',\
             levels2, ticks2,'both', cbar_orient='horizontal' )
 
 # tsechirr
+# #tsechirr adapt 
 # ax1 = fig.add_subplot(1, 3, 1, projection=rotated_pole)
 # cax1 = fig.add_axes([0.148, 0.01, 0.19, 0.04])
 # levels1=[-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]
 # ticks1=levels1
-# #tsechirr adapt 
 # plot_rotvar(fig, var_ts_prescribed_diff, ax1, cax1, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
 #             levels1, ticks1,'both' , cbar_orient='horizontal')
 
+#tsechirr flextime-prescribed 
 ax5 = fig.add_subplot(2, 2, 3, projection=rotated_pole)
 cax5 = fig.add_axes([0.12, 0.1, 0.35, 0.02])
 levels5=[-0.5, -0.4, -0.3, -0.2, -0.1, 0.1, 0.2, 0.3, 0.4, 0.5]
 ticks5=[ -0.4,  -0.2,  0.2,  0.4]
-#tsechirr adapt 
 plot_rotvar(fig, var_ts_flextime_prescribed, ax5, cax5, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
             levels5,ticks5, 'both', cbar_orient='horizontal' )
-    
+
+ #tsechirr adapt-prescribed    
 ax6 = fig.add_subplot(2, 2, 4, projection=rotated_pole)
 cax6 = fig.add_axes([0.55, 0.1, 0.35, 0.02])
-#tsechirr adapt 
 plot_rotvar(fig, var_ts_adapt_prescribed, ax6, cax6, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
             levels5, ticks5,'both', cbar_orient='horizontal' )
 #plt.show()

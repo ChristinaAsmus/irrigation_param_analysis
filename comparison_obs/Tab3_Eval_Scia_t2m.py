@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Sep 30 08:39:48 2022
 
-@author: g300099
-
-This program evaluates the REMO model results with the data from scia 
+This program evaluates the REMO model results with the data from SCIA  
 http://193.206.192.214/servertsutm/serietemporali400.php 
+
+The model results are interpolated to the station's locations using inverse distance weighting (IDW). 
 
 """
 

@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 16:51:49 2023
-
-@author: g300099
+creates Fig B1 
+plotting of irrigation days in August using the irrigation mask 
 """
 
 import xarray as xr
@@ -35,8 +34,9 @@ for var, var_num in zip(varlist, var_num_list):
         ds_var_irri=xr.merge([ds_var_irri, single_var_data])
 dsirr_newtime = correct_timedim(ds_var_irri)
 
-month_name='June'
-nirrihours = 9  # da in den Output Daten IRRIMASK nur für 5h aktiv ist
+month_name='August'
+# IRRIMASK is summed up over the month. Therefore we have to divide it by the number of active irrigation hours in the output (10h-1h) 
+nirrihours = 9  
 imasksum = (dsirr_newtime.IRRIMASK.sum('time')/nirrihours)
 imaskvalues = imasksum.where(imasksum > 0, np.nan)
 

@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 14:37:56 2023
-
-@author: g300099
+creates Fig12 
+crates plot for irrigation effects as spatial plot, barplot (irri vs. noirri), diff plot on precipitation
 """
 
 import xarray as xr

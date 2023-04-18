@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 14:41:57 2023
-
-@author: g300099
+creates Fig 13
+creates spatial plot for irrigation effects on LAI and NPP 
+Be careful with the unit of NPP, we use gC( of freshmatter)/m2month1 
 """
 
 

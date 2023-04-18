@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 15:04:39 2023
-
-@author: g300099
+creates Fig 16 
+creates combined time series of temperature, soil moisture, precipitation evpotranspiration development during the heat wave 
 """
 import xarray as xr
 import numpy as np

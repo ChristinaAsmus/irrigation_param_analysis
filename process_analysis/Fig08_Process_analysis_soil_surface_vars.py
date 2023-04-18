@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 17 14:04:23 2023
-
-@author: g300099
+creates Fig 8 
+creates combined subplot of spatial overview, diurnal cycle and annual cycle of irrigation effects 
+for soil moisture, surface&soil temperature and evapotranspiration 
 """
 
 
