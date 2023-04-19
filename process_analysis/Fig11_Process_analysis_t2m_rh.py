@@ -230,4 +230,4 @@ wspace = 0.35
 hspace = 0.5 
 fig.subplots_adjust(wspace=wspace, hspace=hspace)
 #plt.savefig(str(dir_out)+'/'+str(exp_number_irri)+'_temperature_relative_humidity_new_2.png',dpi=300, bbox_inches='tight')
-
+plt.show()

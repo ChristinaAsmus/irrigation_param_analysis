@@ -54,5 +54,5 @@ cax = fig.add_axes([0.265, 0.05, 0.5, 0.04])
 levels=np.arange(0,31,2)
 ticks=levels
 rotplot = plot_rotvar(fig, imaskvalues, ax, cax, '[n]', 'number of irrigated days', 'GnBu', levels, ticks, 'max','horizontal')
-                       
 #plt.savefig(str(dir_out)+'/app_irrimask_'+str(month_name)+'.png',dpi=300, bbox_inches='tight')
+plt.show()

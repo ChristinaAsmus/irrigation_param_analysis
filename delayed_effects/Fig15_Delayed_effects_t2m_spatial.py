@@ -115,4 +115,4 @@ region_IT=draw_rectangel(t2maxspatialdiff, 60, 110, 70, 50)
 ax3.plot(region_IT[0],region_IT[1], transform=rotated_pole, color='k',zorder=4, linewidth=1.4, linestyle='--')
 
 #plt.savefig(str(dir_out)+'/'+str(exp_number_irri)+'_all_temperatures_spatial_overall_heatwave_IT_new_2.png',dpi=300, bbox_inches='tight')
-
+plt.show()

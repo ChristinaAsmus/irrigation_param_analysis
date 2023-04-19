@@ -154,6 +154,5 @@ plot_rotvar(fig, precip_mean_Aug, ax6, cax6, '[mm]', 'precipitation [mm] ','YlGn
             levels6,ticks6, 'max', 'horizontal' )
 hspace =0.5
 fig.subplots_adjust(hspace=hspace)
-#plt.show()
-#plt.savefig(str(dir_out)+'/'+str(exp_number_irri)+'_precipitation_spatialmean_heatwave_noregions.png',dpi=300, bbox_inches='tight')
-
+#plt.savefig(str(dir_out)+'/Test_'+str(exp_number_irri)+'_precipitation_spatialmean_heatwave_noregions.png',dpi=300, bbox_inches='tight')
+plt.show()

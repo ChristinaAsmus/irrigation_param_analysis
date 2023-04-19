@@ -119,4 +119,4 @@ ticks=[-0.8,-0.4,0.4,0.8,]
 rotplot = plot_rotvar(fig, bratio_diff, ax3, cax3, label='Bowen ratio [ΔWm$^{-2}$]',\
     unit='[ΔWm$^{-2}$]', cmap='RdBu_r', levels=levels3, extend_scale='both', ticks=ticks,  cbar_orient='horizontal')
 #plt.savefig(str(dir_out)+'/'+str(exp_number_irri)+'_fluxes_new.png',dpi=300, bbox_inches='tight')
-
+plt.show()

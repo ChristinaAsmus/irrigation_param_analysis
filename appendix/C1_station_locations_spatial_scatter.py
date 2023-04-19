@@ -238,6 +238,6 @@ for var, varremo in zip(varlist, varremolist):
     plt.title('SCIA station locations selected \n'+str(varremo),fontsize=15)
     plt.tight_layout()
     #plt.savefig('/work/ch0636/g300099/EVALUATION/plots/Eval_Scia_stations_location_selected_'+str(var)+'_new.png',dpi=300, bbox_inches='tight')
-     
+    plt.show() 
     
        

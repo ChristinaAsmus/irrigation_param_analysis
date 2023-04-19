@@ -140,3 +140,4 @@ ax3.grid(True)
 wspace = 0.35   
 fig.subplots_adjust(wspace=wspace)
 #plt.savefig(str(dir_out)+'/'+str(exp_number_irri)+'_precip_new.png',dpi=300, bbox_inches='tight')
+plt.show()

@@ -225,4 +225,4 @@ wspace = 0.35
 hspace = 0.45  
 fig.subplots_adjust(wspace=wspace, hspace=hspace)
 #plt.savefig(str(dir_out)+'/'+str(exp_number_irri)+'soil_processes_combined_new.png',dpi=300, bbox_inches='tight')
-
+plt.show()

@@ -69,6 +69,5 @@ ax1.annotate('SF', (-14.7,-4.3))
 plt.scatter(x=x_gridbox.rlon,y=y_gridbox.rlat,marker='x', s=40, facecolors='firebrick', alpha=1,   zorder=4)
 ax1.annotate("example\n grid cell", xy=(-5.5,-5), xytext=(-3.5,-4.1), arrowprops=dict(arrowstyle="->",color='firebrick', lw=2), \
              color='firebrick', fontsize=10, zorder=4)
-#plt.show()
 #plt.savefig(str(dir_out)+'/Irrifrac_regions_example_gridcell.png',dpi=300, bbox_inches='tight')
-
+plt.show()

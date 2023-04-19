@@ -139,4 +139,4 @@ ax4.set_title(' ')
 ax4.tick_params(axis='both')
 plt.tight_layout()
 #plt.savefig(str(dir_out)+'/NPP_lines_months_diff.png',dpi=300, bbox_inches='tight')
-
+plt.show()

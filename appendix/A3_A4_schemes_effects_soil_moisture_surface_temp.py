@@ -185,5 +185,6 @@ ax6 = fig.add_subplot(2, 2, 4, projection=rotated_pole)
 cax6 = fig.add_axes([0.55, 0.1, 0.35, 0.02])
 plot_rotvar(fig, var_ts_adapt_prescribed, ax6, cax6, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
             levels5, ticks5,'both', cbar_orient='horizontal' )
-#plt.show()
-#plt.savefig(str(dir_out)+'/app_schemes_tsechirr_diff_prescribed_flextime_adapt_'+str(month)+'spatial.png',dpi=300, bbox_inches='tight')
+#plt.savefig(str(dir_out)+'/app_schemes_tsechirr_diff_prescribed_flextime_adapt_'+str(month)+'spatial.png',dpi=300, bbox_inches='tight'
+plt.show()
+

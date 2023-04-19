@@ -141,6 +141,5 @@ for i in range(len(rlat_list)):
 
 wspace = 0.7   # the amount of width reserved for blank space between subplots
 fig.subplots_adjust(wspace=wspace)
-#plt.show()
 #plt.savefig(str(dir_out)+'/'+str(exp_number_irri)+'_temperature_AMJJA_2.png',dpi=300, bbox_inches='tight')
-
+plt.show()

@@ -260,6 +260,6 @@ for i in range(len(rlat_list)):
     ax4.set_ylim(-1,4.2)
     ax4.set_ylabel('evapotranspiration fractions \n [mmd$^{-1}$]')
     p.legend(bbox_to_anchor=(1., 1.05)) #loc='upper right')
-plt.savefig(str(dir_out)+'/'+str(exp_number_irri)+'_overall_heatwave_IT_combined_2.png',dpi=300, bbox_inches='tight')
-
+#plt.savefig(str(dir_out)+'/'+str(exp_number_irri)+'_overall_heatwave_IT_combined_2.png',dpi=300, bbox_inches='tight')
+plt.show()
 

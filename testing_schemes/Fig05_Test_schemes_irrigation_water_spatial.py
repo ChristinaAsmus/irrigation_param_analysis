@@ -108,5 +108,5 @@ cax3 = fig.add_axes([0.69, 0.01, 0.19, 0.04])
 #irrwr adapt 
 plot_rotvar(fig, irrwr_adapt, ax3, cax3, '[mm]', 'irrigation water [mm] ','viridis_r',\
             levels1, ticks1,'max', 'horizontal' )
-#plt.show()
 #plt.savefig(str(dir_out)+'/schemes_irrwr_'+str(month)+'spatial_new.png',dpi=300, bbox_inches='tight')
+plt.show()

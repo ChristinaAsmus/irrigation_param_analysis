@@ -119,3 +119,4 @@ for i in range(len(nppspatialdiff)):
 hspace = 0.7 
 fig.subplots_adjust(hspace=hspace)
 #plt.savefig(str(dir_out)+'/NPP_spatial_months_diff.png',dpi=300, bbox_inches='tight')
+plt.show()

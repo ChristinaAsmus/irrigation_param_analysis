@@ -123,5 +123,5 @@ for i in range(len(rlat_list)):
 ax3.legend([labels.get(x) for x in df_diff_surface[['RN','AHFLIRR','AHFSIRR','GHFL']].columns], loc='upper right',  bbox_to_anchor=(2.0, 1.05))
 plt.tight_layout()
 #plt.savefig(str(dir_out)+'/surface_energy_balance_hourly_regions_new.png',dpi=300, bbox_inches='tight')
-
+plt.show()
 
