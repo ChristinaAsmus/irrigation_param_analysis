@@ -43,7 +43,8 @@ irrifrac=remo_tfile.IRRIFRAC[0]
 
 varlist=[ 'WSECHIRR','WSMXIRR',  'RUNOFFIR', 'DRAINIRR']
 var_num_list=['701', '728',  '713', '700']
-for var, var_num in zip(varlist, var_num_list): 
+for var, var_num in zip(varlist, var_num_list):
+    print(f'analysis: {var}')
     single_var_data_adapt=read_efiles(var, var_num, exp_number_irri_adapt, year, month)
     single_var_data_prescribed=read_efiles(var, var_num, exp_number_irri_prescribed, year, month)
     single_var_data_flextime=read_efiles(var, var_num, exp_number_irri_flextime, year, month)
@@ -70,7 +71,7 @@ dsnoirr=correct_timedim(ds_var_noirri)
 
 # In[]: define plot directory
 
-dir_out='/work/ch0636/g300099/SIMULATIONS/GAR11/plot/plot_for_paper1/'
+dir_out='plots'
 
 # In[]: plot DRAINIRR & RUNOFFIR
 
@@ -124,5 +125,5 @@ ax3.legend(legend_labels, loc='upper right')
 ax3.set_ylabel('drainage [m]')
 ax3.set_xlabel(' ')
 ax3.grid()
-#plt.savefig(str(dir_out)+'/sup_schemes_runoff_drainage_wsechirr_June_new.png',dpi=300, bbox_inches='tight')
-plt.show()
+plt.savefig('plots/sup_schemes_runoff_drainage_wsechirr_June_new.png',dpi=300, bbox_inches='tight')
+#plt.show()
