@@ -15,13 +15,13 @@ import matplotlib.pyplot as plt
 import glob
 
 import sys
-sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
-from functions_reading_files import *
-from functions_correcting_time import * 
-from functions_plotting import * 
-from functions_calculations import *
-from functions_rotation import *
-from functions_idw import *
+#sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
+from analysis_functions.functions_reading_files import *
+from analysis_functions.functions_correcting_time import * 
+from analysis_functions.functions_plotting import * 
+from analysis_functions.functions_calculations import *
+from analysis_functions.functions_rotation import *
+from analysis_functions.functions_idw import *
 
 varlist=['T2M_MEAN','T2M_MAXMEAN','T2M_MINMEAN']
 varremolist=['TEMP2','T2MAX','T2MIN']
