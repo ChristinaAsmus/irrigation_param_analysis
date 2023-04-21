@@ -1,3 +1,4 @@
+name: irrigation-analysis
 channels:
   - conda-forge
   - nodefaults
