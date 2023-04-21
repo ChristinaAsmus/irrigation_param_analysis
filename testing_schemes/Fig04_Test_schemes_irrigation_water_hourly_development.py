@@ -11,9 +11,7 @@ import xarray as xr
 import numpy as np
 import pandas as pd
 from datetime import datetime
-import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
-import cartopy.feature as cfeature
 import os 
 
 import sys
@@ -34,8 +32,12 @@ exp_number_irri_adapt='067017'
 
 # In[]: define plot directory
 
-dir_out='/work/ch0636/g300099/SIMULATIONS/GAR11/plot/plot_for_paper1/'
-
+dir_working=os.getcwd()
+# creates dir in parent directory 
+dir_out=os.path.join(os.pardir,'Figures') 
+if not os.path.exists(dir_out):
+   os.makedirs(dir_out)
+print('Output directory is: ', dir_out)
 
 # In[]: read data 
 
@@ -165,5 +167,5 @@ ax2.tick_params(axis='both', which='major', labelsize=14)
 ax2.set_xlabel('01.06.2017', fontsize=16)
 ax2.legend(['prescribed','flextime', 'adaptive'],fontsize=14)
 ax2.yaxis.grid(color='gray')
-#plt.savefig(str(dir_out)+'/schemes_irrwr_hourly_'+str(month)+'barplot_new.png',dpi=300, bbox_inches='tight')
+plt.savefig(str(dir_out)+'/Fig04.png',dpi=300, bbox_inches='tight')
 plt.show()

@@ -8,6 +8,7 @@ plotting of irrigation effects on soil moisture and surface temperature using th
 
 import xarray as xr
 import matplotlib.pyplot as plt
+import os
 
 import sys
 sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
@@ -63,7 +64,12 @@ dsnoirr=correct_timedim(ds_var_noirri)
 
 # In[]: define plot directory
 
-dir_out='/work/ch0636/g300099/SIMULATIONS/GAR11/plot/plot_for_paper1/'
+dir_working=os.getcwd()
+# creates dir in parent directory 
+dir_out=os.path.join(os.pardir,'Figures') 
+if not os.path.exists(dir_out):
+   os.makedirs(dir_out)
+print('Output directory is: ', dir_out)
 
 # In[]: 
 ####################### diff between schemes and not irrigated ###############################
@@ -128,8 +134,8 @@ ax6 = fig.add_subplot(2, 3, 6, projection=rotated_pole)
 cax6= fig.add_axes([0.678, 0.11, 0.22, 0.02])
 plot_rotvar(fig, var_ts_adapt_diff, ax6, cax6, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
             levels4, ticks4,'both', cbar_orient='horizontal' )
-#plt.show()
-#plt.savefig(str(dir_out)+'/app_schemes_tsechirr_diff_'+str(month)+'spatial.png',dpi=300, bbox_inches='tight')
+plt.savefig(str(dir_out)+'FigA3.png',dpi=300, bbox_inches='tight')
+plt.show()
 
 ############################## diff between schemes ####################### 
 # difference between schemes 
@@ -185,6 +191,6 @@ ax6 = fig.add_subplot(2, 2, 4, projection=rotated_pole)
 cax6 = fig.add_axes([0.55, 0.1, 0.35, 0.02])
 plot_rotvar(fig, var_ts_adapt_prescribed, ax6, cax6, '[ΔK]', 'soil temperature [ΔK] ','RdBu_r',\
             levels5, ticks5,'both', cbar_orient='horizontal' )
-#plt.savefig(str(dir_out)+'/app_schemes_tsechirr_diff_prescribed_flextime_adapt_'+str(month)+'spatial.png',dpi=300, bbox_inches='tight'
+plt.savefig(str(dir_out)+'/FigA4.png',dpi=300, bbox_inches='tight')
 plt.show()
 

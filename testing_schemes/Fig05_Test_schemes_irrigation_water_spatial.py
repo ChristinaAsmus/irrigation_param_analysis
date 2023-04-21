@@ -33,8 +33,13 @@ exp_number_irri_adapt='067017'
 
 # In[]: define plot directory
 
-dir_out='/work/ch0636/g300099/SIMULATIONS/GAR11/plot/plot_for_paper1/'
 
+dir_working=os.getcwd()
+# creates dir in parent directory 
+dir_out=os.path.join(os.pardir,'Figures') 
+if not os.path.exists(dir_out):
+   os.makedirs(dir_out)
+print('Output directory is: ', dir_out)
 
 # In[]: read data 
 
@@ -108,5 +113,5 @@ cax3 = fig.add_axes([0.69, 0.01, 0.19, 0.04])
 #irrwr adapt 
 plot_rotvar(fig, irrwr_adapt, ax3, cax3, '[mm]', 'irrigation water [mm] ','viridis_r',\
             levels1, ticks1,'max', 'horizontal' )
-#plt.savefig(str(dir_out)+'/schemes_irrwr_'+str(month)+'spatial_new.png',dpi=300, bbox_inches='tight')
+plt.savefig(str(dir_out)+'/Fig05.png',dpi=300, bbox_inches='tight')
 plt.show()

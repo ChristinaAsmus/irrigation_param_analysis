@@ -10,6 +10,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import seaborn as sns
+import os
 
 import sys
 sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
@@ -56,8 +57,12 @@ dsnoirr_newtime = correct_timedim(ds_var_noirri)
 
 # In[]: define plot directory
 
-dir_out='/work/ch0636/g300099/SIMULATIONS/GAR11/plot/plot_for_paper1/'
- 
+dir_working=os.getcwd()
+# creates dir in parent directory 
+dir_out=os.path.join(os.pardir,'Figures') 
+if not os.path.exists(dir_out):
+   os.makedirs(dir_out)
+print('Output directory is: ', dir_out)
 # In[]: spatial plot for heat wave temperature
 
 
@@ -114,5 +119,5 @@ ax3.set_title(' ')
 region_IT=draw_rectangel(t2maxspatialdiff, 60, 110, 70, 50)
 ax3.plot(region_IT[0],region_IT[1], transform=rotated_pole, color='k',zorder=4, linewidth=1.4, linestyle='--')
 
-#plt.savefig(str(dir_out)+'/'+str(exp_number_irri)+'_all_temperatures_spatial_overall_heatwave_IT_new_2.png',dpi=300, bbox_inches='tight')
+plt.savefig(str(dir_out)+'/Fig15.png',dpi=300, bbox_inches='tight')
 plt.show()

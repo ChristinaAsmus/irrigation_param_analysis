@@ -10,7 +10,7 @@ import xarray as xr
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import os
 import sys
 sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
 from functions_reading_files import *
@@ -61,7 +61,12 @@ mdsnoirri_extended = correct_timedim_mfiles(xr.merge([mds_noirri, irrifrac]))
 
 # In[]: define plot directory
 
-dir_out='/work/ch0636/g300099/SIMULATIONS/GAR11/plot/plot_for_paper1/'
+dir_working=os.getcwd()
+# creates dir in parent directory 
+dir_out=os.path.join(os.pardir,'Figures') 
+if not os.path.exists(dir_out):
+   os.makedirs(dir_out)
+print('Output directory is: ', dir_out)
     
 # In[]: Define regions 
 
@@ -122,6 +127,6 @@ for i in range(len(rlat_list)):
     ax3.tick_params(axis='both')
 ax3.legend([labels.get(x) for x in df_diff_surface[['RN','AHFLIRR','AHFSIRR','GHFL']].columns], loc='upper right',  bbox_to_anchor=(2.0, 1.05))
 plt.tight_layout()
-#plt.savefig(str(dir_out)+'/surface_energy_balance_hourly_regions_new.png',dpi=300, bbox_inches='tight')
+plt.savefig(str(dir_out)+'/Fig10.png',dpi=300, bbox_inches='tight')
 plt.show()
 
