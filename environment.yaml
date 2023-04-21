@@ -4,5 +4,6 @@ channels:
   - nodefaults
 dependencies:
   - xarray
+  - matplotlib
   - cartopy
   - dask
