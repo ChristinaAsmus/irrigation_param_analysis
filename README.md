@@ -1,4 +1,7 @@
 # irrigation_param_analysis
+
+[![test](https://github.com/christinaasmus/irrigation_param_analysis/actions/workflows/test.yaml/badge.svg)](https://github.com/christinaasmus/irrigation_param_analysis/actions/workflows/test.yaml)
+
 This repository contains the code for the analysis of the irrigation parameterization implemented into REMO2020-iMOVE.
 
 ## Figure overview
