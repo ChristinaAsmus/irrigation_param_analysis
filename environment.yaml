@@ -10,5 +10,3 @@ dependencies:
   - cartopy
   - dask
   - netcdf4
-  pip:
-    - researchpy
