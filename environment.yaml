@@ -9,5 +9,6 @@ dependencies:
   - matplotlib
   - cartopy
   - dask
+  - netcdf4
   pip:
     - researchpy
