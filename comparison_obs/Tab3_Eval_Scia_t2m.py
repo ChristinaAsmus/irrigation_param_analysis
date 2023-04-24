@@ -18,17 +18,24 @@ import matplotlib.pyplot as plt
 import glob
 
 import sys
-sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
-from functions_reading_files import *
-from functions_correcting_time import * 
-from functions_plotting import * 
-from functions_calculations import *
-from functions_rotation import *
-from functions_idw import *
+import os
+#sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
+from analysis_functions.functions_reading_files import *
+from analysis_functions.functions_correcting_time import * 
+from analysis_functions.functions_plotting import * 
+from analysis_functions.functions_calculations import *
+from analysis_functions.functions_rotation import *
+from analysis_functions.functions_idw import *
 
 
+plot_dir='./plots'
+output_dir='./EVALUATION/TESTALL/'
 
+if not os.path.isdir(output_dir):
+    os.makedirs(output_dir)
 
+if not os.path.isdir(plot_dir):
+    os.makedirs(plot_dir)
 # In[]: variables to analyze
 
 
@@ -236,7 +243,6 @@ for var, varremo in zip(varlist, varremolist):
   
         # In[]: calculate BIAS / difference between int. REMO TEMP2 mean monthly and OBS 
         
-        output_dir='/work/ch0636/g300099/EVALUATION/TESTALL/'
         
         df_inttemp_irri_prep=df_inttemp_irri.set_index(['rlat','rlon']).rename(columns={"temp2m": "temp2m_remo_irri"})
         df_inttemp_noirri_prep=df_inttemp_noirri.set_index(['rlat','rlon']).rename(columns={"temp2m": "temp2m_remo_noirri"})
@@ -303,7 +309,7 @@ for var, varremo in zip(varlist, varremolist):
     ax1.gridlines()
     plt.title('SCIA station locations selected \n'+str(varremo),fontsize=15)
     plt.tight_layout()
-    #plt.savefig('/work/ch0636/g300099/EVALUATION/plots/Eval_Scia_stations_location_selected_'+str(var)+'_new.png',dpi=300, bbox_inches='tight')
+    plt.savefig(os.path.join(plot_dir, 'Eval_Scia_stations_location_selected_'+str(var)+'_new.png'),dpi=300, bbox_inches='tight')
      
     
         

@@ -1,0 +1,13 @@
+name: irrigation-analysis
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - xarray
+  - pandas
+  - numpy
+  - matplotlib
+  - cartopy
+  - dask
+  pip:
+    - researchpy
