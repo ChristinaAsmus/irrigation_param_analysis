@@ -11,5 +11,6 @@ dependencies:
   - dask
   - netcdf4
   - tqdm
+  - pytest
   - pip:
     - researchpy

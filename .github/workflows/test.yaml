@@ -51,3 +51,6 @@ jobs:
       - name: Import analysis_functions
         run: |
           python -c "import analysis_functions"
+      - name: Test zenodo download
+        run: |
+          pytest -s tests/
