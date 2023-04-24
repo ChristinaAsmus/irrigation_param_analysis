@@ -13,6 +13,7 @@ import pandas as pd
 import cartopy.feature as cfeature
 import matplotlib.pyplot as plt
 import glob
+import os
 
 import sys
 #sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
@@ -22,6 +23,14 @@ from analysis_functions.functions_plotting import *
 from analysis_functions.functions_calculations import *
 from analysis_functions.functions_rotation import *
 from analysis_functions.functions_idw import *
+
+
+dir_working=os.getcwd()
+# creates dir in parent directory 
+dir_out=os.path.join(os.pardir,'Figures') 
+if not os.path.exists(dir_out):
+   os.makedirs(dir_out)
+print('Output directory is: ', dir_out)
 
 varlist=['T2M_MEAN','T2M_MAXMEAN','T2M_MINMEAN']
 varremolist=['TEMP2','T2MAX','T2MIN']
@@ -237,7 +246,7 @@ for var, varremo in zip(varlist, varremolist):
     ax1.gridlines()
     plt.title('SCIA station locations selected \n'+str(varremo),fontsize=15)
     plt.tight_layout()
-    #plt.savefig('/work/ch0636/g300099/EVALUATION/plots/Eval_Scia_stations_location_selected_'+str(var)+'_new.png',dpi=300, bbox_inches='tight')
+    plt.savefig(str(dir_out)+'/FigC1.png',dpi=300, bbox_inches='tight')
     plt.show() 
     
        

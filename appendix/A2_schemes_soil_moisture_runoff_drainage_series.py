@@ -71,7 +71,14 @@ dsnoirr=correct_timedim(ds_var_noirri)
 
 # In[]: define plot directory
 
-dir_out='plots'
+
+dir_working=os.getcwd()
+# creates dir in parent directory 
+dir_out=os.path.join(os.pardir,'Figures') 
+if not os.path.exists(dir_out):
+   os.makedirs(dir_out)
+print('Output directory is: ', dir_out)
+
 
 # In[]: plot DRAINIRR & RUNOFFIR
 
@@ -125,5 +132,7 @@ ax3.legend(legend_labels, loc='upper right')
 ax3.set_ylabel('drainage [m]')
 ax3.set_xlabel(' ')
 ax3.grid()
-plt.savefig('plots/sup_schemes_runoff_drainage_wsechirr_June_new.png',dpi=300, bbox_inches='tight')
-#plt.show()
+
+plt.savefig(str(dir_out)+'/FigA2.png',dpi=300, bbox_inches='tight')
+plt.show()
+

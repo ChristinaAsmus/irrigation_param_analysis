@@ -8,7 +8,7 @@ creates spatial plot of irrigation effects on sensible & latent heat flux and Bo
 
 import xarray as xr
 import matplotlib.pyplot as plt
-
+import os
 import sys
 sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
 from functions_reading_files import *
@@ -60,7 +60,12 @@ mdsnoirri_extended = correct_timedim_mfiles(xr.merge([mds_noirri, irrifrac]))
 
 # In[]: define plot directory
 
-dir_out='/work/ch0636/g300099/SIMULATIONS/GAR11/plot/plot_for_paper1/'
+dir_working=os.getcwd()
+# creates dir in parent directory 
+dir_out=os.path.join(os.pardir,'Figures') 
+if not os.path.exists(dir_out):
+   os.makedirs(dir_out)
+print('Output directory is: ', dir_out)
     
 # In[]: Define regions 
 
@@ -118,5 +123,5 @@ levels3=[-1. , -0.8, -0.6, -0.4, -0.2,  0.2,  0.4,  0.6,  0.8,  1.]
 ticks=[-0.8,-0.4,0.4,0.8,]
 rotplot = plot_rotvar(fig, bratio_diff, ax3, cax3, label='Bowen ratio [ΔWm$^{-2}$]',\
     unit='[ΔWm$^{-2}$]', cmap='RdBu_r', levels=levels3, extend_scale='both', ticks=ticks,  cbar_orient='horizontal')
-#plt.savefig(str(dir_out)+'/'+str(exp_number_irri)+'_fluxes_new.png',dpi=300, bbox_inches='tight')
+plt.savefig(str(dir_out)+'/Fig09.png',dpi=300, bbox_inches='tight')
 plt.show()

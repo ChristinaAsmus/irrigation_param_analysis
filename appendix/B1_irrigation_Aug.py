@@ -34,6 +34,13 @@ for var, var_num in zip(varlist, var_num_list):
         ds_var_irri=xr.merge([ds_var_irri, single_var_data])
 dsirr_newtime = correct_timedim(ds_var_irri)
 
+dir_working=os.getcwd()
+# creates dir in parent directory 
+dir_out=os.path.join(os.pardir,'Figures') 
+if not os.path.exists(dir_out):
+   os.makedirs(dir_out)
+print('Output directory is: ', dir_out)
+
 month_name='August'
 # IRRIMASK is summed up over the month. Therefore we have to divide it by the number of active irrigation hours in the output (10h-1h) 
 nirrihours = 9  
@@ -54,5 +61,5 @@ cax = fig.add_axes([0.265, 0.05, 0.5, 0.04])
 levels=np.arange(0,31,2)
 ticks=levels
 rotplot = plot_rotvar(fig, imaskvalues, ax, cax, '[n]', 'number of irrigated days', 'GnBu', levels, ticks, 'max','horizontal')
-#plt.savefig(str(dir_out)+'/app_irrimask_'+str(month_name)+'.png',dpi=300, bbox_inches='tight')
+plt.savefig(str(dir_out)+'/FigB1.png',dpi=300, bbox_inches='tight')
 plt.show()

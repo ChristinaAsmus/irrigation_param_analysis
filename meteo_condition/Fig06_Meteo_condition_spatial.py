@@ -9,6 +9,7 @@ Created on Mon Apr 17 11:39:17 2023
 import xarray as xr
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 import sys
 sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
@@ -52,8 +53,14 @@ dsnoirr_newtime = correct_timedim(ds_var_noirri)
 
 # In[]: define plot directory
 
-dir_out='/work/ch0636/g300099/SIMULATIONS/GAR11/plot/plot_for_paper1/'
-    
+
+dir_working=os.getcwd()
+dir_working=os.getcwd()
+# creates dir in parent directory 
+dir_out=os.path.join(os.pardir,'Figures') 
+if not os.path.exists(dir_out):
+   os.makedirs(dir_out)
+print('Output directory is: ', dir_out)  
 # In[]: Define regions 
 
 rlat_list=[(50,70),(30,70),(90,105)]
@@ -154,5 +161,5 @@ plot_rotvar(fig, precip_mean_Aug, ax6, cax6, '[mm]', 'precipitation [mm] ','YlGn
             levels6,ticks6, 'max', 'horizontal' )
 hspace =0.5
 fig.subplots_adjust(hspace=hspace)
-#plt.savefig(str(dir_out)+'/Test_'+str(exp_number_irri)+'_precipitation_spatialmean_heatwave_noregions.png',dpi=300, bbox_inches='tight')
+plt.savefig(str(dir_out)+'/Fig06.png',dpi=300, bbox_inches='tight')
 plt.show()

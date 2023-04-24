@@ -10,6 +10,7 @@ plottin gof the model domain together with its analysis regions and example grid
 import xarray as xr
 import numpy as np
 import matplotlib.pyplot as plt
+import os 
 
 import sys
 sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/') 
@@ -19,6 +20,12 @@ from functions_plotting import *
 from functions_calculations import *
 
 
+dir_working=os.getcwd()
+# creates dir in parent directory 
+dir_out=os.path.join(os.pardir,'Figures') 
+if not os.path.exists(dir_out):
+   os.makedirs(dir_out)
+print('Output directory is: ', dir_out)
 
 # background map: irrifrac
 remo_dir = '/work/ch0636/g300099/SIMULATIONS/GAR11/remo_results/067016/2017/xt/'
@@ -69,5 +76,5 @@ ax1.annotate('SF', (-14.7,-4.3))
 plt.scatter(x=x_gridbox.rlon,y=y_gridbox.rlat,marker='x', s=40, facecolors='firebrick', alpha=1,   zorder=4)
 ax1.annotate("example\n grid cell", xy=(-5.5,-5), xytext=(-3.5,-4.1), arrowprops=dict(arrowstyle="->",color='firebrick', lw=2), \
              color='firebrick', fontsize=10, zorder=4)
-#plt.savefig(str(dir_out)+'/Irrifrac_regions_example_gridcell.png',dpi=300, bbox_inches='tight')
+plt.savefig(str(dir_out)+'/Fig03.png',dpi=300, bbox_inches='tight')
 plt.show()
