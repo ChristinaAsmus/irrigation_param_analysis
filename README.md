@@ -26,4 +26,12 @@ FigC1 | appendix | C1_station_locations_spatial_scatter.py
 
 ## Environment
 
+Install everything:
+
+```bash
+conda env install -f environment.yaml
+
+```
+
+
 ## Data access
