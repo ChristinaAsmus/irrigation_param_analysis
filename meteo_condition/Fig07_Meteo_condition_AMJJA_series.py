@@ -37,11 +37,17 @@ exp_number_noirri = "067015"
 # In[]: read efiles
 
 # background map: irrifrac
-remo_dir = "/work/ch0636/g300099/SIMULATIONS/GAR11/remo_results/067016/2017/xt/"
-remo_files = "e067016t2017060100.nc"
-remo_tfile = xr.open_dataset(remo_dir + remo_files)
-irrifrac = remo_tfile.IRRIFRAC[0]
-landfrac = remo_tfile.BLA[0]
+remo_dir = (
+    "/work/ch0636/g300099/SIMULATIONS/GAR11/remo_results/"
+    + str(exp_number_noirri)
+    + "/2017/var_series/"
+)
+remo_irrifrac_files = "IRRIFRAC//e" + str(exp_number_noirri) + "e_c743_201706.nc"
+remo_irrifrac = xr.open_dataset(remo_dir + remo_irrifrac_files)
+irrifrac = remo_irrifrac.IRRIFRAC[0]
+remo_landfrac_files = "BLA//e" + str(exp_number_noirri) + "e_c172_201706.nc"
+remo_landfrac = xr.open_dataset(remo_dir + remo_landfrac_files)
+landfrac = remo_landfrac.BLA[0]
 
 # analysis variables
 varlist = ["WSECHIRR", "APRL", "APRC", "TEMP2", "T2MAX", "T2MIN"]

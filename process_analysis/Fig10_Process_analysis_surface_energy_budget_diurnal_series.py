@@ -33,8 +33,12 @@ exp_number_noirri = "067015"
 # In[]: read files
 
 # background map: irrifrac
-remo_dir = "/work/ch0636/g300099/SIMULATIONS/GAR11/remo_results/067016/2017/xt/"
-remo_files = "e067016t2017060100.nc"
+remo_dir = (
+    "/work/ch0636/g300099/SIMULATIONS/GAR11/remo_results/"
+    + str(exp_number_noirri)
+    + "/2017/var_series/IRRIFRAC/"
+)
+remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
 remo_tfile = xr.open_dataset(remo_dir + remo_files)
 irrifrac = remo_tfile.IRRIFRAC[0]
 

@@ -147,10 +147,14 @@ for var, varremo in zip(varlist, varremolist):
         exp_number_noirri = "067015"
 
         # background map: irrifrac
-        remo_dir = "/work/ch0636/g300099/SIMULATIONS/GAR11/remo_results/067016/2017/xt/"
-        remo_files = "e067016t20170" + str(month) + "0100.nc"
-        remo_irrifrac = xr.open_dataset(remo_dir + remo_files)
-        irrifrac = remo_irrifrac.IRRIFRAC[0]
+        remo_dir = (
+            "/work/ch0636/g300099/SIMULATIONS/GAR11/remo_results/"
+            + str(exp_number_noirri)
+            + "/2017/var_series/IRRIFRAC/"
+        )
+        remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
+        remo_tfile = xr.open_dataset(remo_dir + remo_files)
+        irrifrac = remo_tfile.IRRIFRAC[0]
 
         # remo data
         if varremo == "T2MIN" and var == "T2M_MINMEAN":
