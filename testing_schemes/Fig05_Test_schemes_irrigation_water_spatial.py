@@ -7,22 +7,13 @@ creates plot of irrigation water used for different water application schemes
 
 
 import os
-import sys
-from datetime import datetime
 
-import cartopy.crs as ccrs
-import cartopy.feature as cfeature
 import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
 import xarray as xr
 
-sys.path.append(
-    "/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/"
-)
-from functions_correcting_time import *
-from functions_plotting import *
-from functions_reading_files import *
+from analysis_functions.functions_correcting_time import correct_timedim
+from analysis_functions.functions_plotting import plot_rotvar, rotated_pole
+from analysis_functions.functions_reading_files import read_efiles
 
 # In[]:experiment for analyzing
 

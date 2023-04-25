@@ -8,16 +8,12 @@ plottin gof the model domain together with its analysis regions and example grid
 
 
 import os
-import sys
 
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
 
-from analysis_functions.functions_calculations import *
-from analysis_functions.functions_correcting_time import *
-from analysis_functions.functions_plotting import *
-from analysis_functions.functions_reading_files import *
+from analysis_functions.functions_plotting import plot_rotvar, rotated_pole
 
 dir_working = os.getcwd()
 # creates dir in parent directory

@@ -5,7 +5,6 @@ creates Fig 16
 creates combined time series of temperature, soil moisture, precipitation evpotranspiration development during the heat wave
 """
 import os
-import sys
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
@@ -14,13 +13,8 @@ import pandas as pd
 import seaborn as sns
 import xarray as xr
 
-sys.path.append(
-    "/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/"
-)
-from functions_calculations import *
-from functions_correcting_time import *
-from functions_plotting import *
-from functions_reading_files import *
+from analysis_functions.functions_correcting_time import correct_timedim
+from analysis_functions.functions_reading_files import read_efiles
 
 # In[]: important definitions
 

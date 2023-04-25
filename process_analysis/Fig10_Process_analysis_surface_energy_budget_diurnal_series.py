@@ -7,20 +7,17 @@ creates diurnal time series of irrigation effects on the surface energy balance
 
 
 import os
-import sys
 
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import xarray as xr
 
-sys.path.append(
-    "/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/"
+from analysis_functions.functions_calculations import prepare_var
+from analysis_functions.functions_correcting_time import (
+    correct_timedim,
+    correct_timedim_mfiles,
 )
-from functions_calculations import *
-from functions_correcting_time import *
-from functions_plotting import *
-from functions_reading_files import *
+from analysis_functions.functions_reading_files import read_efiles, read_mfiles
 
 # In[]: select experiment, year and month
 

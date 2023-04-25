@@ -9,7 +9,6 @@ Be aware that the stations are not the same for T2MAX, T2MIN and TEMP2!
 
 import glob
 import os
-import sys
 
 import cartopy.feature as cfeature
 import matplotlib.pyplot as plt
@@ -17,14 +16,11 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
-from analysis_functions.functions_calculations import *
-from analysis_functions.functions_correcting_time import *
-from analysis_functions.functions_idw import *
-from analysis_functions.functions_plotting import *
-
-# sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/')
-from analysis_functions.functions_reading_files import *
-from analysis_functions.functions_rotation import *
+from analysis_functions.functions_correcting_time import correct_timedim
+from analysis_functions.functions_idw import idw_for_model
+from analysis_functions.functions_plotting import coastline, land, rotated_pole
+from analysis_functions.functions_reading_files import read_efiles, read_mfiles
+from analysis_functions.functions_rotation import rotated_coord_transform
 
 dir_working = os.getcwd()
 # creates dir in parent directory

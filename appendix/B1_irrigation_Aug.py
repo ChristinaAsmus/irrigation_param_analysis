@@ -5,16 +5,15 @@ creates Fig B1
 plotting of irrigation days in August using the irrigation mask
 """
 
-import sys
+import os
 
 import matplotlib.pyplot as plt
+import numpy as np
 import xarray as xr
 
-from analysis_functions.functions_correcting_time import *
-from analysis_functions.functions_plotting import *
-
-# sys.path.append('/home/g/g300099/pyprograms/Paper1_for_publishing_final/plot_figures/functions/')
-from analysis_functions.functions_reading_files import *
+from analysis_functions.functions_correcting_time import correct_timedim
+from analysis_functions.functions_plotting import plot_rotvar, rotated_pole
+from analysis_functions.functions_reading_files import read_efiles
 
 # In[]: appendix irrimask for August
 
