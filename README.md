@@ -1,4 +1,7 @@
 # irrigation_param_analysis
+
+[![test](https://github.com/christinaasmus/irrigation_param_analysis/actions/workflows/test.yaml/badge.svg)](https://github.com/christinaasmus/irrigation_param_analysis/actions/workflows/test.yaml)
+
 This repository contains the code for the analysis of the irrigation parameterization implemented into REMO2020-iMOVE.
 
 ## Figure overview
@@ -24,14 +27,17 @@ FigA4 | appendix | A3_A4_schemes_effects_soil_moisture_surface_temp.py
 FigB1 | appendix | B1_irrigation_Aug.py
 FigC1 | appendix | C1_station_locations_spatial_scatter.py
 
-## Environment
+## Installation
 
-Install everything:
+Create a new conda environment using, e.g.
 
 ```bash
-conda env install -f environment.yaml
-
+conda env create -f environment.yaml
 ```
 
+Afterwards, you can install the required plotting and `analysis_functions` using
+```
+pip install -e .
+```
 
 ## Data access
