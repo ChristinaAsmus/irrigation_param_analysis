@@ -26,8 +26,13 @@ var_num_list = ["797"]
 month = 8
 
 
+# paths on levante
+levante_path_irri_sim = "/work/ch0636/g300099/Paper1/data/irrigated/sim/"
+
 for var, var_num in zip(varlist, var_num_list):
-    single_var_data = read_efiles(var, var_num, exp_number_irri, year, month)
+    single_var_data = read_efiles(
+        levante_path_irri_sim, var, var_num, exp_number_irri, year, month
+    )
     if var == varlist[0]:
         ds_var_irri = single_var_data
     else:

@@ -138,27 +138,30 @@ for var, varremo in zip(varlist, varremolist):
         station_data.drop_duplicates(ignore_index=True)
 
         #  remo data | read files
+        levante_path_noirri = "/work/ch0636/g300099/Paper1/data/not_irrigated/sim/"
+        levante_path_irri_sim = "/work/ch0636/g300099/Paper1/data/irrigated/sim/"
 
         exp_number_irri = "067016"
         exp_number_noirri = "067015"
 
         # background map: irrifrac
-        remo_dir = (
-            "/work/ch0636/g300099/SIMULATIONS/GAR11/remo_results/"
-            + str(exp_number_noirri)
-            + "/2017/var_series/IRRIFRAC/"
-        )
+        remo_dir = str(exp_number_noirri) + "/irrifrac/"
         remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
-        remo_tfile = xr.open_dataset(remo_dir + remo_files)
+        remo_tfile = xr.open_dataset(levante_path_noirri + remo_dir + remo_files)
         irrifrac = remo_tfile.IRRIFRAC[0]
 
         # remo data
         if varremo == "T2MIN" and var == "T2M_MINMEAN":
             remo_irri_var = (
                 (
-                    read_efiles("T2MIN", 202, exp_number_irri, year, month)[varremo][
-                        :, 0, :, :
-                    ]
+                    read_efiles(
+                        levante_path_irri_sim,
+                        "T2MIN",
+                        202,
+                        exp_number_irri,
+                        year,
+                        month,
+                    )[varremo][:, 0, :, :]
                 )
                 - 273.15
             ).drop("height2m")
@@ -172,9 +175,14 @@ for var, varremo in zip(varlist, varremolist):
 
             remo_noirri_var = (
                 (
-                    read_efiles("T2MIN", 202, exp_number_noirri, year, month)[varremo][
-                        :, 0, :, :
-                    ]
+                    read_efiles(
+                        levante_path_noirri,
+                        "T2MIN",
+                        202,
+                        exp_number_noirri,
+                        year,
+                        month,
+                    )[varremo][:, 0, :, :]
                 )
                 - 273.15
             ).drop("height2m")
@@ -191,9 +199,14 @@ for var, varremo in zip(varlist, varremolist):
         elif varremo == "T2MAX" and var == "T2M_MAXMEAN":
             remo_irri_var = (
                 (
-                    read_efiles("T2MAX", 201, exp_number_irri, year, month)[varremo][
-                        :, 0, :, :
-                    ]
+                    read_efiles(
+                        levante_path_irri_sim,
+                        "T2MAX",
+                        201,
+                        exp_number_irri,
+                        year,
+                        month,
+                    )[varremo][:, 0, :, :]
                 )
                 - 273.15
             ).drop("height2m")
@@ -207,9 +220,14 @@ for var, varremo in zip(varlist, varremolist):
 
             remo_noirri_var = (
                 (
-                    read_efiles("T2MAX", 201, exp_number_noirri, year, month)[varremo][
-                        :, 0, :, :
-                    ]
+                    read_efiles(
+                        levante_path_noirri,
+                        "T2MAX",
+                        201,
+                        exp_number_noirri,
+                        year,
+                        month,
+                    )[varremo][:, 0, :, :]
                 )
                 - 273.15
             ).drop("height2m")
@@ -225,11 +243,19 @@ for var, varremo in zip(varlist, varremolist):
 
         elif varremo == "TEMP2" and var == "T2M_MEAN":
             remo_irri_var = (
-                (read_mfiles(exp_number_irri, year, month)[varremo][0, 0, :, :])
+                (
+                    read_mfiles(levante_path_irri_sim, exp_number_irri, year, month)[
+                        varremo
+                    ][0, 0, :, :]
+                )
                 - 273.15
             ).drop("height2m")
             remo_noirri_var = (
-                (read_mfiles(exp_number_noirri, year, month)[varremo][0, 0, :, :])
+                (
+                    read_mfiles(levante_path_noirri, exp_number_noirri, year, month)[
+                        varremo
+                    ][0, 0, :, :]
+                )
                 - 273.15
             ).drop("height2m")
             remo_irri_data = xr.merge([irrifrac, remo_irri_var], compat="override")
@@ -378,5 +404,5 @@ for var, varremo in zip(varlist, varremolist):
     ax1.gridlines()
     plt.title("SCIA station locations selected \n" + str(varremo), fontsize=15)
     plt.tight_layout()
-    plt.savefig(str(dir_out) + "/FigC1.png", dpi=300, bbox_inches="tight")
+    # plt.savefig(str(dir_out) + "/FigC1.png", dpi=300, bbox_inches="tight")
     plt.show()

@@ -26,27 +26,26 @@ exp_number_noirri = "067015"
 
 # In[]: read files
 
+
+# paths on levante
+levante_path_noirri = "/work/ch0636/g300099/Paper1/data/not_irrigated/sim/"
+levante_path_irri_sim = "/work/ch0636/g300099/Paper1/data/irrigated/sim/"
+
 # background map: irrifrac
-remo_dir = (
-    "/work/ch0636/g300099/SIMULATIONS/GAR11/remo_results/"
-    + str(exp_number_noirri)
-    + "/2017/var_series/IRRIFRAC/"
-)
+remo_dir = str(exp_number_noirri) + "/irrifrac/"
 remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
-remo_tfile = xr.open_dataset(remo_dir + remo_files)
+remo_tfile = xr.open_dataset(levante_path_noirri + remo_dir + remo_files)
 irrifrac = remo_tfile.IRRIFRAC[0]
 
 # In[]: read mfiles
-mds_irri = read_mfiles(exp_number_irri, 2017, 0)
-mds_noirri = read_mfiles(exp_number_noirri, 2017, 0)
+mds_irri = read_mfiles(levante_path_irri_sim, exp_number_irri, 2017, 0)
+mds_noirri = read_mfiles(levante_path_noirri, exp_number_noirri, 2017, 0)
 
 mdsirri_extended = correct_timedim_mfiles(xr.merge([mds_irri, irrifrac]))
 mdsnoirri_extended = correct_timedim_mfiles(xr.merge([mds_noirri, irrifrac]))
 
 # In[]: define plot directory
 
-
-dir_working = os.getcwd()
 
 dir_working = os.getcwd()
 # creates dir in parent directory
