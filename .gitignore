@@ -107,5 +107,8 @@ ENV/
 # Figures
 /Figures
 
+# data
+/data
+
 # *.swp
 .*.swp
