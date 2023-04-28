@@ -29,14 +29,15 @@ from analysis_functions.functions_plotting import *
 from analysis_functions.functions_reading_files import *
 from analysis_functions.functions_rotation import *
 
-plot_dir = "./plots"
-output_dir = "./EVALUATION/TESTALL/"
+dir_out_plot = os.path.join(os.pardir, "Figures")
+if not os.path.exists(dir_out_plot):
+    os.makedirs(dir_out_plot)
 
-if not os.path.isdir(output_dir):
-    os.makedirs(output_dir)
+dir_out_tab = os.path.join(os.pardir, "Eval")
+if not os.path.exists(dir_out_tab):
+    os.makedirs(dir_out_tab)
 
-if not os.path.isdir(plot_dir):
-    os.makedirs(plot_dir)
+
 # In[]: variables to analyze
 
 
@@ -162,20 +163,22 @@ for var, varremo in zip(varlist, varremolist):
 
         exp_number_irri = "067016"
         exp_number_noirri = "067015"
+        data_path = "../data"
 
         # background map: irrifrac
-        remo_dir = "/work/ch0636/g300099/SIMULATIONS/GAR11/remo_results/067016/2017/xt/"
-        remo_files = "e067016t20170" + str(month) + "0100.nc"
-        remo_irrifrac = xr.open_dataset(remo_dir + remo_files)
-        irrifrac = remo_irrifrac.IRRIFRAC[0]
-
+        remo_dir = str(exp_number_noirri) + "/irrifrac/"
+        remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
+        remo_tfile = xr.open_dataset(
+            str(data_path) + "/" + str(remo_dir) + str(remo_files)
+        )
+        irrifrac = remo_tfile.IRRIFRAC[0]
         # remo data
         if varremo == "T2MIN" and var == "T2M_MINMEAN":
             remo_irri_var = (
                 (
-                    read_efiles("T2MIN", 202, exp_number_irri, year, month)[varremo][
-                        :, 0, :, :
-                    ]
+                    read_efiles(data_path, "T2MIN", 202, exp_number_irri, year, month)[
+                        varremo
+                    ][:, 0, :, :]
                 )
                 - 273.15
             ).drop("height2m")
@@ -189,9 +192,9 @@ for var, varremo in zip(varlist, varremolist):
 
             remo_noirri_var = (
                 (
-                    read_efiles("T2MIN", 202, exp_number_noirri, year, month)[varremo][
-                        :, 0, :, :
-                    ]
+                    read_efiles(
+                        data_path, "T2MIN", 202, exp_number_noirri, year, month
+                    )[varremo][:, 0, :, :]
                 )
                 - 273.15
             ).drop("height2m")
@@ -208,9 +211,9 @@ for var, varremo in zip(varlist, varremolist):
         elif varremo == "T2MAX" and var == "T2M_MAXMEAN":
             remo_irri_var = (
                 (
-                    read_efiles("T2MAX", 201, exp_number_irri, year, month)[varremo][
-                        :, 0, :, :
-                    ]
+                    read_efiles(data_path, "T2MAX", 201, exp_number_irri, year, month)[
+                        varremo
+                    ][:, 0, :, :]
                 )
                 - 273.15
             ).drop("height2m")
@@ -224,9 +227,9 @@ for var, varremo in zip(varlist, varremolist):
 
             remo_noirri_var = (
                 (
-                    read_efiles("T2MAX", 201, exp_number_noirri, year, month)[varremo][
-                        :, 0, :, :
-                    ]
+                    read_efiles(
+                        data_path, "T2MAX", 201, exp_number_noirri, year, month
+                    )[varremo][:, 0, :, :]
                 )
                 - 273.15
             ).drop("height2m")
@@ -242,11 +245,19 @@ for var, varremo in zip(varlist, varremolist):
 
         elif varremo == "TEMP2" and var == "T2M_MEAN":
             remo_irri_var = (
-                (read_mfiles(exp_number_irri, year, month)[varremo][0, 0, :, :])
+                (
+                    read_mfiles(data_path, exp_number_irri, year, month)[varremo][
+                        0, 0, :, :
+                    ]
+                )
                 - 273.15
             ).drop("height2m")
             remo_noirri_var = (
-                (read_mfiles(exp_number_noirri, year, month)[varremo][0, 0, :, :])
+                (
+                    read_mfiles(data_path, exp_number_noirri, year, month)[varremo][
+                        0, 0, :, :
+                    ]
+                )
                 - 273.15
             ).drop("height2m")
             remo_irri_data = xr.merge([irrifrac, remo_irri_var], compat="override")
@@ -412,7 +423,7 @@ for var, varremo in zip(varlist, varremolist):
         df_all["BIAS_noirri"] = df_all.temp2m_remo_noirri - df_all.temp2m_station
 
         df_all.to_csv(
-            output_dir + "stations_bias_" + str(var) + "_20170" + str(month) + ".csv"
+            dir_out_tab + "stations_bias_" + str(var) + "_20170" + str(month) + ".csv"
         )
 
         mean_bias_irri = df_all.BIAS_irri.mean(axis=0, skipna=True)
@@ -422,7 +433,7 @@ for var, varremo in zip(varlist, varremolist):
             {"mean_bias_irri": [mean_bias_irri], "mean_bias_noirri": [mean_bias_noirri]}
         )
         df_mean.to_csv(
-            output_dir + "mean_bias_" + str(var) + "_20170" + str(month) + ".csv"
+            dir_out_tab + "mean_bias_" + str(var) + "_20170" + str(month) + ".csv"
         )
 
         print("mean BIAS irri", mean_bias_irri)
@@ -442,10 +453,10 @@ for var, varremo in zip(varlist, varremolist):
             group2_name="noirri",
         )
         summary.to_csv(
-            output_dir + "ttest_summary" + str(var) + "_20170" + str(month) + ".csv"
+            dir_out_tab + "ttest_summary" + str(var) + "_20170" + str(month) + ".csv"
         )
         results.to_csv(
-            output_dir + "ttest_results" + str(var) + "_20170" + str(month) + ".csv"
+            dir_out_tab + "ttest_results" + str(var) + "_20170" + str(month) + ".csv"
         )
 
         # In[]: plot selected stations locations on basis of remo data with idw
@@ -484,7 +495,8 @@ for var, varremo in zip(varlist, varremolist):
     plt.tight_layout()
     plt.savefig(
         os.path.join(
-            plot_dir, "Eval_Scia_stations_location_selected_" + str(var) + "_new.png"
+            dir_out_plot,
+            "Eval_Scia_stations_location_selected_" + str(var) + "_new.png",
         ),
         dpi=300,
         bbox_inches="tight",

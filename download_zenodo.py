@@ -6,7 +6,7 @@ import xarray as xr
 
 from analysis_functions.download import download_file_in_dir
 
-files = ["067017.tar.gz", "067019.tar.gz", "067020.tar.gz", "067015", "067016"]
+files = ["067017.tar.gz", "067019.tar.gz", "067020.tar.gz"]  # , "067015", "067016"]
 url = "https://zenodo.org/record/7867329/files/"
 
 # create folder for data
@@ -20,9 +20,9 @@ print("Data directory is: ", dir_out)
 
 
 def download(singlefile):
+    print("Downloading", str(singlefile))
     filename = download_file_in_dir(url + str(singlefile), dir_out)
     assert filename == op.basename(url + str(singlefile))
-    print("Downloading", str(filename))
     return filename
 
 

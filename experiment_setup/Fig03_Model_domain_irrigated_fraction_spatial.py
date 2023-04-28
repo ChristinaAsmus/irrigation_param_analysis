@@ -24,14 +24,15 @@ print("Output directory is: ", dir_out)
 
 exp_number_noirri = "067015"
 
-# paths on levante
-levante_path_noirri = "/work/ch0636/g300099/Paper1/data/not_irrigated/sim/"
+# paths to the data
+data_path = "../data"
 
 # background map: irrifrac
 remo_dir = str(exp_number_noirri) + "/irrifrac/"
 remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
-remo_tfile = xr.open_dataset(levante_path_noirri + remo_dir + remo_files)
+remo_tfile = xr.open_dataset(str(data_path) + "/" + str(remo_dir) + str(remo_files))
 irrifrac = remo_tfile.IRRIFRAC[0]
+
 
 # In[]: Irrifrac plot with regions
 

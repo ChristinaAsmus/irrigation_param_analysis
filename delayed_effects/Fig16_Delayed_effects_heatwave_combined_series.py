@@ -24,15 +24,13 @@ exp_number_noirri = "067015"
 
 # In[]: read files
 
-
-# paths on levante
-levante_path_noirri = "/work/ch0636/g300099/Paper1/data/not_irrigated/sim/"
-levante_path_irri_sim = "/work/ch0636/g300099/Paper1/data/irrigated/sim/"
+# paths to the data
+data_path = "../data"
 
 # background map: irrifrac
 remo_dir = str(exp_number_noirri) + "/irrifrac/"
 remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
-remo_tfile = xr.open_dataset(levante_path_noirri + remo_dir + remo_files)
+remo_tfile = xr.open_dataset(str(data_path) + "/" + str(remo_dir) + str(remo_files))
 irrifrac = remo_tfile.IRRIFRAC[0]
 
 
@@ -71,10 +69,10 @@ month = 8
 
 for var, var_num in zip(varlist, var_num_list):
     single_var_data_irri = read_efiles(
-        levante_path_irri_sim, var, var_num, exp_number_irri, year, month
+        data_path, var, var_num, exp_number_irri, year, month
     )
     single_var_data_noirri = read_efiles(
-        levante_path_noirri, var, var_num, exp_number_noirri, year, month
+        data_path, var, var_num, exp_number_noirri, year, month
     )
     if var == varlist[0]:
         ds_var_irri = single_var_data_irri

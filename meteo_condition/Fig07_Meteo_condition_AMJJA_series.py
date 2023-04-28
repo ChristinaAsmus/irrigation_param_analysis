@@ -31,22 +31,21 @@ exp_number_noirri = "067015"
 
 # In[]: read efiles
 
-
-# paths on levante
-levante_path_noirri = "/work/ch0636/g300099/Paper1/data/not_irrigated/sim/"
+# paths to the data
+data_path = "../data"
 
 # background map: irrifrac
 remo_irrifrac_dir = str(exp_number_noirri) + "/irrifrac/"
 remo_irrifrac_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
 remo_irrifrac = xr.open_dataset(
-    levante_path_noirri + remo_irrifrac_dir + remo_irrifrac_files
+    str(data_path) + "/" + str(remo_irrifrac_dir) + str(remo_irrifrac_files)
 )
 irrifrac = remo_irrifrac.IRRIFRAC[0]
 # land-sea-mask
 remo_landfrac_dir = str(exp_number_noirri) + "/bla/"
 remo_landfrac_files = "e" + str(exp_number_noirri) + "e_c172_201706.nc"
 remo_landfrac = xr.open_dataset(
-    levante_path_noirri + remo_landfrac_dir + remo_landfrac_files
+    str(data_path) + "/" + str(remo_landfrac_dir) + str(remo_landfrac_files)
 )
 landfrac = remo_landfrac.BLA[0]
 
@@ -56,7 +55,7 @@ var_num_list = ["701", "142", "143", "167", "201", "202"]
 
 for var, var_num in zip(varlist, var_num_list):
     single_var_data = read_efiles(
-        levante_path_noirri, var, var_num, exp_number_noirri, year, month
+        data_path, var, var_num, exp_number_noirri, year, month
     )
     if var == varlist[0]:
         ds_var_noirri = single_var_data

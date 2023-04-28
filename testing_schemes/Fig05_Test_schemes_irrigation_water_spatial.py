@@ -36,15 +36,13 @@ if not os.path.exists(dir_out):
 print("Output directory is: ", dir_out)
 
 # In[]: read data
-
-# paths on levante
-levante_path_noirri = "/work/ch0636/g300099/Paper1/data/not_irrigated/sim/"
-levante_path_irri_test = "/work/ch0636/g300099/Paper1/data/irrigated/test/"
+# paths to the data
+data_path = "../data"
 
 # background map: irrifrac
 remo_dir = str(exp_number_noirri) + "/irrifrac/"
 remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
-remo_tfile = xr.open_dataset(levante_path_noirri + remo_dir + remo_files)
+remo_tfile = xr.open_dataset(str(data_path) + "/" + str(remo_dir) + str(remo_files))
 irrifrac = remo_tfile.IRRIFRAC[0]
 
 
@@ -52,10 +50,10 @@ varlist = ["IRRWR"]
 var_num_list = ["796"]
 for var, var_num in zip(varlist, var_num_list):
     single_var_data_adapt = read_efiles(
-        levante_path_irri_test, var, var_num, exp_number_irri_adapt, year, month
+        data_path, var, var_num, exp_number_irri_adapt, year, month
     )
     single_var_data_prescribed = read_efiles(
-        levante_path_irri_test, var, var_num, exp_number_irri_prescribed, year, month
+        data_path, var, var_num, exp_number_irri_prescribed, year, month
     )
     if var == varlist[0]:
         ds_var_irri_adapt = single_var_data_adapt
@@ -73,7 +71,7 @@ varlist_flextime = ["IRRWR", "IRRDUR"]
 var_num_list = ["796", "795"]
 for var, var_num in zip(varlist_flextime, var_num_list):
     single_var_data = read_efiles(
-        levante_path_irri_test, var, var_num, exp_number_irri_flextime, year, month
+        data_path, var, var_num, exp_number_irri_flextime, year, month
     )
     if var == varlist[0]:
         ds_var_irri = single_var_data
