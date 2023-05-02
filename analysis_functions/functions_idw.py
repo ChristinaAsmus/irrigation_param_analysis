@@ -12,7 +12,7 @@ from scipy.spatial import cKDTree
 
 
 def idw_for_model(rlat_source, rlon_source, rlat_target, rlon_target, data):
-    # from https://www.guillaumedueymes.com/post/netcdf_interpolation/
+    # adapted from Dueymes, G. 2020: https://www.guillaumedueymes.com/post/netcdf_interpolation/
 
     rlon_source2d, rlat_source2d = np.meshgrid(rlon_source, rlat_source)
     rlon_target2d, rlat_target2d = np.meshgrid(rlon_target, rlat_target)
