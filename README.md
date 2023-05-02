@@ -2,7 +2,7 @@
 
 [![test](https://github.com/christinaasmus/irrigation_param_analysis/actions/workflows/test.yaml/badge.svg)](https://github.com/christinaasmus/irrigation_param_analysis/actions/workflows/test.yaml)
 
-This repository contains the code for the analysis of the irrigation parameterization implemented into REMO2020-iMOVE.
+This repository contains the code for the analysis of the irrigation parameterization implemented into REMO2020-iMOVE. 
 
 ## Figure overview
 Figure |  directory | plotting routine
@@ -41,3 +41,5 @@ pip install -e .
 ```
 
 ## Data access
+To reproduce the analysis, please download the data from 10.5281/zenodo.7867329 using download_zenodo.py.
+The observational data for the analysis in /compare_obs/Tab3_Eval_Scia_t2m.py and in /appendix/C1_station_locations_spatial_scatter.py can be downloaded from http://193.206.192.214/serverstazioni/stazioni400.php.
