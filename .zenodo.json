@@ -1,0 +1,22 @@
+{
+  "creators": [
+    {
+      "affiliation": "Helmholtz-Zentrum Hereon",
+      "name": "Christina Asmus",
+      "orcid": "0009-0002-1396-6210"
+    },
+    {
+      "affiliation": "Helmholtz-Zentrum Hereon",
+      "name": "Lars Buntemeyer",
+      "orcid": "0000-0002-0849-2404"
+    }
+  ],
+  "keywords": [
+    "rcm",
+    "remo",
+    "analysis"
+  ],
+  "license": "MIT",
+  "upload_type": "software",
+  "access_right": "open"
+}
