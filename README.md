@@ -1,7 +1,10 @@
 # irrigation_param_analysis
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7889385.svg)](https://doi.org/10.5281/zenodo.7889385)
 [![test](https://github.com/christinaasmus/irrigation_param_analysis/actions/workflows/test.yaml/badge.svg)](https://github.com/christinaasmus/irrigation_param_analysis/actions/workflows/test.yaml)
 
+.. image:: 
+   :target: 
 This repository contains the code for the analysis of the irrigation parameterization implemented into REMO2020-iMOVE. 
 
 ## Figure overview
