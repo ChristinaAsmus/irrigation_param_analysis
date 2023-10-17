@@ -32,13 +32,13 @@ exp_number_noirri = "067015"
 
 # paths to the data
 data_path = "../data"
-
-
 # background map: irrifrac
 remo_dir = str(exp_number_noirri) + "/irrifrac/"
+
 remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
 remo_tfile = xr.open_dataset(str(data_path) + "/" + str(remo_dir) + str(remo_files))
 irrifrac = remo_tfile.IRRIFRAC[0]
+
 
 varlist = ["SRADS", "TRADS", "AHFLIRR", "AHFSIRR"]
 var_num_list = ["176", "177", "736", "734"]
@@ -73,7 +73,7 @@ mdsnoirri_extended = correct_timedim_mfiles(xr.merge([mds_noirri, irrifrac]))
 
 dir_working = os.getcwd()
 # creates dir in parent directory
-dir_out = os.path.join(os.pardir, "Figures")
+dir_out = os.path.join(os.pardir, "Figures_corr")
 if not os.path.exists(dir_out):
     os.makedirs(dir_out)
 print("Output directory is: ", dir_out)
@@ -95,12 +95,12 @@ dsnoirr_newtime_AMJ = dsnoirr_newtime.sel(
 sbalance_varlist = ["SRADS", "TRADS", "AHFLIRR", "AHFSIRR"]
 
 labels = {
-    "SRADS": "shortwave radiation",
-    "TRADS": "longwave radiation",
-    "RN": "net radiation",
-    "AHFSIRR": "sensible heat flux",
-    "AHFLIRR": "latent heat flux",
-    "GHFL": "ground heat flux*",
+    "SRADS": "Δ shortwave radiation",
+    "TRADS": "Δ longwave radiation",
+    "RN": "Δ net radiation",
+    "AHFSIRR": "Δ sensible heat flux",
+    "AHFLIRR": "Δ latent heat flux",
+    "GHFL": "Δ ground heat flux*",
 }
 colors = {
     "SRADS": "gold",
@@ -113,7 +113,7 @@ colors = {
 
 
 # plot over all regions absolut and diff subplots
-fig = plt.figure(figsize=(18, 4))
+fig = plt.figure(figsize=(19, 4))
 
 params = {
     "legend.fontsize": 18,
@@ -195,7 +195,7 @@ for i in range(len(rlat_list)):
     )
     ax3.set_title(title_list[i])
     ax3.set_xlabel("hour")
-    ax3.set_ylabel("[ΔWm$^{-2}$]")
+    ax3.set_ylabel("[Wm$^{-2}$]")
     ax3.set_ylim(-200, 250)
     ax3.grid(True)
     ax3.tick_params(axis="both")

@@ -29,9 +29,9 @@ exp_number_noirri = "067015"
 
 # paths to the data
 data_path = "../data"
-
 # background map: irrifrac
 remo_dir = str(exp_number_noirri) + "/irrifrac/"
+
 remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
 remo_tfile = xr.open_dataset(str(data_path) + "/" + str(remo_dir) + str(remo_files))
 irrifrac = remo_tfile.IRRIFRAC[0]
@@ -65,7 +65,7 @@ dsnoirr_newtime = correct_timedim(ds_var_noirri)
 
 dir_working = os.getcwd()
 # creates dir in parent directory
-dir_out = os.path.join(os.pardir, "Figures")
+dir_out = os.path.join(os.pardir, "Figures_corr")
 if not os.path.exists(dir_out):
     os.makedirs(dir_out)
 print("Output directory is: ", dir_out)
@@ -134,9 +134,19 @@ t2maxspatialdiff = (
 
 
 levels = [-4, -3.5, -3, -2.5, -2, -1.5, -1, -0.5, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]
-ticks = [-4, -3, -2, -1, 1, 2, 3, 4]
+ticks = [-4, -3, -2, -1, 0, 1, 2, 3, 4]
 
 fig = plt.figure(figsize=(18, 4))
+
+params = {
+    "legend.fontsize": 18,
+    "axes.labelsize": 18,
+    "axes.titlesize": 16,
+    "xtick.labelsize": 15,
+    "ytick.labelsize": 15,
+}
+plt.rcParams.update(params)
+
 
 ax1 = fig.add_subplot(1, 3, 1, projection=rotated_pole)
 cax1 = fig.add_axes([0.145, 0.01, 0.19, 0.04])
@@ -145,8 +155,8 @@ rotplot = plot_rotvar(
     tempspatialdiff,
     ax1,
     cax1,
-    unit="[ΔK]",
-    label="T2Mean [ΔK]",
+    unit="[K]",
+    label="T2Mean [K]",
     cmap="RdBu_r",
     levels=levels,
     extend_scale="both",
@@ -173,8 +183,8 @@ rotplot = plot_rotvar(
     t2maxspatialdiff,
     ax2,
     cax2,
-    unit="[ΔK]",
-    label="T2Max [ΔK]",
+    unit="[K]",
+    label="Δ T2Max [K]",
     cmap="RdBu_r",
     levels=levels,
     extend_scale="both",
@@ -201,8 +211,8 @@ rotplot = plot_rotvar(
     t2minspatialdiff,
     ax3,
     cax3,
-    unit="[ΔK]",
-    label="T2Min [ΔK]",
+    unit="[K]",
+    label="Δ T2Min [K]",
     cmap="RdBu_r",
     levels=levels,
     extend_scale="both",

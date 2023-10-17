@@ -35,7 +35,6 @@ exp_number_noirri = "067015"
 
 # paths to the data
 data_path = "../data"
-
 # background map: irrifrac
 remo_dir = str(exp_number_noirri) + "/irrifrac/"
 remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
@@ -78,7 +77,7 @@ mdsnoirri_extended = correct_timedim_mfiles(xr.merge([mds_noirri, irrifrac]))
 
 dir_working = os.getcwd()
 # creates dir in parent directory
-dir_out = os.path.join(os.pardir, "Figures")
+dir_out = os.path.join(os.pardir, "Figures_corr")
 if not os.path.exists(dir_out):
     os.makedirs(dir_out)
 print("Output directory is: ", dir_out)
@@ -110,29 +109,31 @@ bowen_noirri_mean_clean = bowen_noirri_mean.where((bowen_noirri_mean < 10 ^ 12))
 bratio_diff = bowen_irri_mean_clean - bowen_noirri_mean_clean
 
 
-fig = plt.figure(figsize=(18, 4))
+fig = plt.figure(figsize=(14, 4))
 
 params = {
-    "legend.fontsize": 18,
-    "axes.labelsize": 18,
-    "axes.titlesize": 18,
-    "xtick.labelsize": 16,
-    "ytick.labelsize": 16,
+    "legend.fontsize": 14,
+    "axes.labelsize": 14,
+    "axes.titlesize": 14,
+    "xtick.labelsize": 14,
+    "ytick.labelsize": 14,
 }
 plt.rcParams.update(params)
 
 
 ax1 = fig.add_subplot(1, 3, 1, projection=rotated_pole)
-cax1 = fig.add_axes([0.145, 0.01, 0.19, 0.04])
+# cax1 = fig.add_axes([0.145, 0.01, 0.19, 0.04])
+cax1 = fig.add_axes([0.13, 0.01, 0.22, 0.04])
+
 levels = [-150, -125, -100, -75, -50, -25, 25, 50, 75, 100, 125, 150]
-ticks = [-150, -100, -50, 50, 100, 150]
+ticks = [-150, -100, -50, 0, 50, 100, 150]
 rotplot = plot_rotvar(
     fig,
     lhfl_diff,
     ax1,
     cax1,
-    label="latent heat flux [ΔWm$^{-2}$]",
-    unit="[ΔWm$^{-2}$]",
+    label="Δ latent heat flux [Wm$^{-2}$]",
+    unit="[Wm$^{-2}$]",
     cmap="RdBu_r",
     levels=levels,
     extend_scale="both",
@@ -141,15 +142,16 @@ rotplot = plot_rotvar(
 )
 
 ax2 = fig.add_subplot(1, 3, 2, projection=rotated_pole)
-cax2 = fig.add_axes([0.42, 0.01, 0.19, 0.04])
+# cax2 = fig.add_axes([0.42, 0.01, 0.19, 0.04])
+cax2 = fig.add_axes([0.405, 0.01, 0.22, 0.04])
 
 rotplot = plot_rotvar(
     fig,
     shfl_diff,
     ax2,
     cax2,
-    label="sensible heat flux [ΔWm$^{-2}$]",
-    unit="[ΔWm$^{-2}$]",
+    label="Δ sensible heat flux [Wm$^{-2}$]",
+    unit="[Wm$^{-2}$]",
     cmap="RdBu_r",
     levels=levels,
     extend_scale="both",
@@ -159,11 +161,14 @@ rotplot = plot_rotvar(
 
 
 ax3 = fig.add_subplot(1, 3, 3, projection=rotated_pole)
-cax3 = fig.add_axes([0.69, 0.01, 0.19, 0.04])
+# cax3 = fig.add_axes([0.69, 0.01, 0.19, 0.04])
+cax3 = fig.add_axes([0.675, 0.01, 0.22, 0.04])
+
 levels3 = [-1.0, -0.8, -0.6, -0.4, -0.2, 0.2, 0.4, 0.6, 0.8, 1.0]
 ticks = [
     -0.8,
     -0.4,
+    0,
     0.4,
     0.8,
 ]
@@ -172,13 +177,14 @@ rotplot = plot_rotvar(
     bratio_diff,
     ax3,
     cax3,
-    label="Bowen ratio [ΔWm$^{-2}$]",
-    unit="[ΔWm$^{-2}$]",
+    label="Δ Bowen ratio [-]",
+    unit="[-]",
     cmap="RdBu_r",
     levels=levels3,
     extend_scale="both",
     ticks=ticks,
     cbar_orient="horizontal",
 )
-plt.savefig(str(dir_out) + "/Fig09.png", dpi=300, bbox_inches="tight")
+# plt.subplots_adjust(wspace=-0.2)
+plt.savefig(str(dir_out) + "/Fig09_corr.png", dpi=300, bbox_inches="tight")
 plt.show()

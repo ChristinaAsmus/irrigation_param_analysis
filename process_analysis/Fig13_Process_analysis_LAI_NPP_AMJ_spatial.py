@@ -28,9 +28,9 @@ exp_number_noirri = "067015"
 
 # paths to the data
 data_path = "../data"
-
 # background map: irrifrac
 remo_dir = str(exp_number_noirri) + "/irrifrac/"
+
 remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
 remo_tfile = xr.open_dataset(str(data_path) + "/" + str(remo_dir) + str(remo_files))
 irrifrac = remo_tfile.IRRIFRAC[0]
@@ -47,7 +47,7 @@ mdsnoirri_extended = correct_timedim_mfiles(xr.merge([mds_noirri, irrifrac]))
 
 dir_working = os.getcwd()
 # creates dir in parent directory
-dir_out = os.path.join(os.pardir, "Figures")
+dir_out = os.path.join(os.pardir, "Figures_corr")
 if not os.path.exists(dir_out):
     os.makedirs(dir_out)
 print("Output directory is: ", dir_out)
@@ -105,7 +105,7 @@ nppspatialdiff = ((mdsirri_AMJ[var][:, 0, :, :]) * (30 * 24)) - (
 )
 
 # spatial plot
-fig = plt.figure(figsize=(18, 10))
+fig = plt.figure(figsize=(14, 10))
 
 params = {
     "legend.fontsize": 18,
@@ -116,10 +116,10 @@ params = {
 }
 plt.rcParams.update(params)
 
-cax1 = fig.add_axes([0.152, 0.56, 0.175, 0.02])
-cax2 = fig.add_axes([0.425, 0.54, 0.175, 0.02])
-cax3 = fig.add_axes([0.7, 0.54, 0.175, 0.02])
-cbaraxes_list = [cax1, cax2, cax3]
+cax1 = fig.add_axes([0.105, 0.53, 0.27, 0.02])
+# cax2 = fig.add_axes([0.425, 0.54, 0.175, 0.02])
+# cax3 = fig.add_axes([0.7, 0.54, 0.175, 0.02])
+cbaraxes_list = [cax1, cax1, cax1]
 
 for i in range(len(laispatialdiff)):
     ax1 = fig.add_subplot(2, 3, 1 + i, projection=rotated_pole)
@@ -127,6 +127,7 @@ for i in range(len(laispatialdiff)):
     ticks = [
         -0.8,
         -0.4,
+        0,
         0.4,
         0.8,
     ]
@@ -135,7 +136,7 @@ for i in range(len(laispatialdiff)):
         laispatialdiff[i],
         ax1,
         cbaraxes_list[i],
-        label="LAI [Δm$^2$m$^{-2}$]",
+        label="Δ LAI [m$^2$m$^{-2}$]",
         unit="[-]",
         cmap="RdBu_r",
         levels=levels,
@@ -147,10 +148,10 @@ for i in range(len(laispatialdiff)):
 
 # NPP
 # diff spatial
-cax4 = fig.add_axes([0.152, 0.07, 0.175, 0.02])
-cax5 = fig.add_axes([0.425, 0.07, 0.175, 0.02])
-cax6 = fig.add_axes([0.7, 0.07, 0.175, 0.02])
-cbaraxes_list = [cax4, cax5, cax6]
+cax4 = fig.add_axes([0.105, 0.11, 0.27, 0.02])
+# cax5 = fig.add_axes([0.425, 0.07, 0.175, 0.02])
+# cax6 = fig.add_axes([0.7, 0.07, 0.175, 0.02])
+cbaraxes_list = [cax4, cax4, cax4]
 
 for i in range(len(nppspatialdiff)):
     ax4 = fig.add_subplot(2, 3, 3 + (1 + i), projection=rotated_pole)
@@ -180,14 +181,14 @@ for i in range(len(nppspatialdiff)):
         1100,
         1200,
     ]
-    ticks = [-1200, -400, 400, 1200]
+    ticks = [-1200, -400, 0, 400, 1200]
     rotplot = plot_rotvar(
         fig,
         nppspatialdiff[i],
         ax4,
         cbaraxes_list[i],
-        label="NPP [ΔgCm$^{-2}$month$^{-1}$]",
-        unit="[ΔgCm$^{-2}$month$^{-1}$]",
+        label="Δ NPP [gCm$^{-2}$month$^{-1}$]",
+        unit="[gCm$^{-2}$month$^{-1}$]",
         cmap="RdBu_r",
         levels=levels,
         extend_scale="both",
@@ -195,7 +196,7 @@ for i in range(len(nppspatialdiff)):
         cbar_orient="horizontal",
     )
     ax4.set_title(" ")
-hspace = 0.7
+hspace = 0.2
 fig.subplots_adjust(hspace=hspace)
 plt.savefig(str(dir_out) + "/Fig13.png", dpi=300, bbox_inches="tight")
 plt.show()

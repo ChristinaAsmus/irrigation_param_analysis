@@ -35,9 +35,9 @@ exp_number_noirri = "067015"
 
 # paths to the data
 data_path = "../data"
-
 # background map: irrifrac
 remo_dir = str(exp_number_noirri) + "/irrifrac/"
+
 remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
 remo_tfile = xr.open_dataset(str(data_path) + "/" + str(remo_dir) + str(remo_files))
 irrifrac = remo_tfile.IRRIFRAC[0]
@@ -75,7 +75,7 @@ mdsnoirri_extended = correct_timedim_mfiles(xr.merge([mds_noirri, irrifrac]))
 
 dir_working = os.getcwd()
 # creates dir in parent directory
-dir_out = os.path.join(os.pardir, "Figures")
+dir_out = os.path.join(os.pardir, "Figures_corr")
 if not os.path.exists(dir_out):
     os.makedirs(dir_out)
 print("Output directory is: ", dir_out)
@@ -131,7 +131,7 @@ dsnoirr_AMJ = dsnoirr_newtime.sel(time=dsnoirr_newtime.time.dt.month.isin([4, 5,
 precipdiff = calculate_meandiff_precip(
     dsirr_AMJ, dsnoirr_AMJ, precip_varlist[0], precip_varlist[1]
 )
-
+data_df["plot_index"] = np.arange(1, 13)
 # plot
 fig = plt.figure(figsize=(18, 4))
 
@@ -154,8 +154,8 @@ rotplot = plot_rotvar(
     precipdiff,
     ax1,
     cax1,
-    unit="[Δmm]",
-    label="precipitation [Δmm]",
+    unit="[mm]",
+    label="Δ precipitation [mm]",
     cmap="RdBu_r",
     levels=levels,
     extend_scale="both",
@@ -165,9 +165,12 @@ rotplot = plot_rotvar(
 
 
 ax2 = fig.add_subplot(1, 3, 2)
-data_df.plot.bar(ax=ax2, rot=45, zorder=3)
+plt.bar(data_df["plot_index"], data_df["irri"], width=0.4, zorder=3)
+plt.bar(data_df["plot_index"] + 0.4, data_df["noirri"], width=0.4, zorder=3)
+plt.xticks(data_df["plot_index"][::2], month_index[::2], rotation=45)
+# data_df.plot.bar(ax=ax2, rot=45, zorder=3)
 ax2.grid(axis="y", linewidth=0.5)
-ax2.legend(["irrigated", "not irrigated"])
+ax2.legend(["irrigated", "not irrigated"], fontsize=16)
 ax2.set_ylabel("[mm]")
 
 # monthly diff
@@ -183,11 +186,12 @@ diff_df["PRECIP"] = (
 
 
 ax3 = fig.add_subplot(1, 3, 3)
-diff_df.plot.line(ax=ax3, rot=45, legend=False)
-ax3.set_xticks(x, diff_df.index, minor=False)
+plt.plot(diff_df)
+# diff_df.plot.line(ax=ax3, rot=45, legend=False)
+ax3.set_xticks(x, diff_df.index, minor=False, rotation=45)
 ax3.set_xticks(ax3.get_xticks()[::2])
 ax3.set_xlabel("month")
-ax3.set_ylabel("[Δmm]")
+ax3.set_ylabel("[mm]")
 ax3.set_ylim(-0.6, 1.0)
 ax3.grid(True)
 wspace = 0.35

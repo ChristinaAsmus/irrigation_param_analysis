@@ -41,9 +41,9 @@ exp_number_noirri = "067015"
 
 # paths to the data
 data_path = "../data"
-
 # background map: irrifrac
 remo_dir = str(exp_number_noirri) + "/irrifrac/"
+
 remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
 remo_tfile = xr.open_dataset(str(data_path) + "/" + str(remo_dir) + str(remo_files))
 irrifrac = remo_tfile.IRRIFRAC[0]
@@ -108,7 +108,7 @@ mdsnoirri_extended = correct_timedim_mfiles(xr.merge([mds_noirri, irrifrac]))
 
 dir_working = os.getcwd()
 # creates dir in parent directory
-dir_out = os.path.join(os.pardir, "Figures")
+dir_out = os.path.join(os.pardir, "Figures_corr")
 if not os.path.exists(dir_out):
     os.makedirs(dir_out)
 print("Output directory is: ", dir_out)
@@ -239,6 +239,8 @@ xticklabels = [
     "Dec",
 ]
 
+# In[]:
+
 fig = plt.figure(figsize=(18, 18))
 
 ax1 = fig.add_subplot(3, 3, 1, projection=rotated_pole)
@@ -250,8 +252,8 @@ rotplot = plot_rotvar(
     wsspatialdiff,
     ax1,
     cax1,
-    label="soil moisture [Δm]",
-    unit="[Δm]",
+    label="Δ soil moisture [m]",
+    unit="[m]",
     cmap="RdBu_r",
     levels=levels,
     ticks=ticks,
@@ -262,7 +264,7 @@ rotplot = plot_rotvar(
 ax2 = fig.add_subplot(3, 3, 2)
 wshourdiff.plot.line(ax=ax2, marker=".")
 ax2.set_xlabel("hours")
-ax2.set_ylabel("[Δm]")
+ax2.set_ylabel("[m]")
 ax2.grid(True)
 
 ax3 = fig.add_subplot(3, 3, 3)
@@ -272,7 +274,7 @@ ax3.set_xticks(
 )
 ax3.set_xticks(ax3.get_xticks()[::2])
 ax3.set_xlabel("months")
-ax3.set_ylabel("[Δm]")
+ax3.set_ylabel("[m]")
 ax3.grid(True)
 
 
@@ -285,8 +287,8 @@ rotplot = plot_rotvar(
     stempspatialdiff,
     ax4,
     cax4,
-    label="surface temperature [ΔK]",
-    unit="[ΔK]",
+    label="Δ surface temperature [K]",
+    unit="[K]",
     cmap="RdBu_r",
     levels=levels,
     ticks=ticks,
@@ -295,20 +297,22 @@ rotplot = plot_rotvar(
 )
 
 ax5 = fig.add_subplot(3, 3, 5)
-stemp_day_df.plot(ax=ax5, legend=False, marker=".")
+plt.plot(stemp_day_df, marker=".")
+# stemp_day_df.plot(ax=ax5, legend=False, marker=".")
 ax5.set_xticks(stemp_day_df.index[0::5], minor=False)
 ax5.set_xlabel("hours")
-ax5.set_ylabel("[ΔK]")
+ax5.set_ylabel("[K]")
 ax5.grid(True)
 
 ax6 = fig.add_subplot(3, 3, 6)
-stemp_month_df.plot(ax=ax6, legend=False, marker=".")
+plt.plot(stemp_month_df, marker=".")
+# stemp_month_df.plot(ax=ax6, legend=False, marker=".")
 ax6.set_xticks(stemp_month_df.index, minor=False)
 ax6.set_xticklabels(xticklabels, rotation=45)
 ax6.set_xticks(ax6.get_xticks()[::2])
 ax6.set_xlabel("month")
-ax6.set_ylabel("[ΔK]")
-ax6.legend(depths_str, bbox_to_anchor=(1.1, 1))
+ax6.set_ylabel("[K]")
+ax6.legend(depths_str, bbox_to_anchor=(1.04, 1))
 ax6.grid(True)
 
 
@@ -321,8 +325,8 @@ rotplot = plot_rotvar(
     evapospatialdiff,
     ax7,
     cax7,
-    label="evapotranspiration [Δmm]",
-    unit="[Δmm]",
+    label="Δ evapotranspiration [mm]",
+    unit="[mm]",
     cmap="RdBu_r",
     levels=levels,
     ticks=ticks,
@@ -331,21 +335,23 @@ rotplot = plot_rotvar(
 )
 
 ax8 = fig.add_subplot(3, 3, 8)
-evap_day_df.plot(ax=ax8, legend=False, marker=".")
+plt.plot(evap_day_df, marker=".")
+# evap_day_df.plot(ax=ax8, legend=False, marker=".")
 ax8.set_xticks(evap_day_df.index[0::5], minor=False)
 
 ax8.set_xlabel("hours")
-ax8.set_ylabel("[Δmm]")
+ax8.set_ylabel("[mm]")
 ax8.grid(True)
 
 ax9 = fig.add_subplot(3, 3, 9)
-evap_month_df.plot(ax=ax9, legend=False, marker=".")
+plt.plot(evap_month_df, marker=".")
+# evap_month_df.plot(ax=ax9, legend=False, marker=".")
 ax9.set_xticks(evap_month_df.index, minor=False)
 ax9.set_xticklabels(xticklabels, rotation=45)
 ax9.set_xticks(ax9.get_xticks()[::2])
 ax9.set_xlabel("month")
-ax9.set_ylabel("[Δmm]")
-ax9.legend(labels, bbox_to_anchor=(1.1, 1))
+ax9.set_ylabel("[mm]")
+ax9.legend(labels, bbox_to_anchor=(1.5, 1))
 ax9.grid(True)
 #
 wspace = 0.35

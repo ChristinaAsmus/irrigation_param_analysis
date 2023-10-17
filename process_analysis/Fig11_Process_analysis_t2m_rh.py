@@ -36,9 +36,9 @@ exp_number_noirri = "067015"
 
 # paths to the data
 data_path = "../data"
-
 # background map: irrifrac
 remo_dir = str(exp_number_noirri) + "/irrifrac/"
+
 remo_files = "e" + str(exp_number_noirri) + "e_c743_201706.nc"
 remo_tfile = xr.open_dataset(str(data_path) + "/" + str(remo_dir) + str(remo_files))
 irrifrac = remo_tfile.IRRIFRAC[0]
@@ -76,7 +76,7 @@ mdsnoirri_extended = correct_timedim_mfiles(xr.merge([mds_noirri, irrifrac]))
 
 dir_working = os.getcwd()
 # creates dir in parent directory
-dir_out = os.path.join(os.pardir, "Figures")
+dir_out = os.path.join(os.pardir, "Figures_corr")
 if not os.path.exists(dir_out):
     os.makedirs(dir_out)
 print("Output directory is: ", dir_out)
@@ -207,6 +207,20 @@ params = {
 }
 plt.rcParams.update(params)
 
+boxprops = dict(linewidth=1.8, color="C0")
+whiskerprops = dict(linewidth=1.4, color="C0")
+capprops = dict(color="C0", linewidth=1.3)
+flierprops = dict(
+    marker="x",
+    markerfacecolor="none",
+    markersize=4,
+    linestyle="none",
+    linewidth=0.3,
+    markeredgecolor="dimgrey",
+    alpha=0.25,
+)
+medianprops = dict(linestyle="-", linewidth=2, color="firebrick")
+
 ax1 = fig.add_subplot(2, 3, 1, projection=rotated_pole)
 cax1 = fig.add_axes([0.12, 0.55, 0.18, 0.02])
 levels = [-2, -1.5, -1, -0.5, 0.5, 1, 1.5, 2]
@@ -216,8 +230,8 @@ rotplot = plot_rotvar(
     tempspatialdiff,
     ax1,
     cax1,
-    label="T2Mean [ΔK]",
-    unit="[ΔK]",
+    label="ΔT2Mean [K]",
+    unit="[K]",
     cmap="RdBu_r",
     levels=levels,
     extend_scale="both",
@@ -228,10 +242,19 @@ ax1.set_title(" ")
 
 ax2 = fig.add_subplot(2, 3, 2)
 box = df_tempdiffhour.boxplot(
-    column="TEMP2", by="hour", ax=ax2, whis=[5, 95]
+    column="TEMP2",
+    by="hour",
+    ax=ax2,
+    whis=[5, 95],
+    patch_artist=True,
+    boxprops=boxprops,
+    whiskerprops=whiskerprops,
+    flierprops=flierprops,
+    medianprops=medianprops,
+    capprops=capprops,
 )  # , showfliers=False)
 ax2.set_xticks(ax2.get_xticks()[::10])
-ax2.set_ylabel("[ΔK]")
+ax2.set_ylabel("[K]")
 ax2.set_ylim(-4.5, 1.0)
 ax2.set_title(" ")
 plt.suptitle("")
@@ -265,7 +288,7 @@ for var in varlist:
     ax3.set_xticklabels(xticklabels, rotation=45)
     ax3.set_xticks(ax3.get_xticks()[::2])
     ax3.set_xlabel("month")
-    ax3.set_ylabel("[ΔK]")
+    ax3.set_ylabel("[K]")
     ax3.legend(temp_str, bbox_to_anchor=(1.1, 1.05))
     ax3.set_title(" ")
     ax3.grid(True)
@@ -273,14 +296,14 @@ for var in varlist:
 ax4 = fig.add_subplot(2, 3, 4, projection=rotated_pole)
 cax4 = fig.add_axes([0.12, 0.1, 0.18, 0.02])
 levels4 = [-16, -14, -12, -10, -8, -6, -4, -2, 2, 4, 6, 8, 10, 12, 14, 16]
-ticks = [-16, -12, -8, -4, 4, 8, 12, 16]
+ticks = [-16, -12, -8, -4, 0, 4, 8, 12, 16]
 rotplot = plot_rotvar(
     fig,
     rhdiff_AMJ,
     ax4,
     cax4,
-    unit="[Δ%]",
-    label="relative humidity [Δ%]",
+    unit="[%]",
+    label="Δ relative humidity [%]",
     cmap="RdBu_r",
     extend_scale="both",
     levels=levels4,
@@ -292,10 +315,19 @@ ax4.set_title(" ")
 
 ax5 = fig.add_subplot(2, 3, 5)
 box = df_rhdiffhour.boxplot(
-    column="RH2", by="hour", ax=ax5, whis=[5, 95]
+    column="RH2",
+    by="hour",
+    ax=ax5,
+    whis=[5, 95],
+    patch_artist=True,
+    boxprops=boxprops,
+    whiskerprops=whiskerprops,
+    flierprops=flierprops,
+    medianprops=medianprops,
+    capprops=capprops,
 )  # , showfliers=False)
 ax5.set_xticks(ax5.get_xticks()[::10])
-ax5.set_ylabel("[Δ%]")
+ax5.set_ylabel("[%]")
 # ax5.set_ylim(-4.5,1.)
 ax5.set_title(" ")
 plt.suptitle("")  # that's what you're after
@@ -324,7 +356,7 @@ ax6.set_xticks(
 ax6.set_xticklabels(xticklabels, rotation=45)
 ax6.set_xticks(ax6.get_xticks()[::2])
 ax6.set_xlabel("month")
-ax6.set_ylabel("[Δ%]")
+ax6.set_ylabel("[%]")
 ax6.set_title(" ")
 ax6.set_ylim(0, 3.7)
 ax6.grid(True)
