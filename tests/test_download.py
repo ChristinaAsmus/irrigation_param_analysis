@@ -4,7 +4,8 @@ import xarray as xr
 
 from analysis_functions.download import download_file
 
-url = "https://sandbox.zenodo.org/record/1186200/files/e067015e_c743_201706.nc"
+# url = "https://sandbox.zenodo.org/record/1186200/files/e067015e_c743_201706.nc"
+url = "https://zenodo.org/records/7867329/files/"
 
 
 def test_download():
