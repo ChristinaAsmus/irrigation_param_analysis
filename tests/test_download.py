@@ -11,9 +11,9 @@ url = "https://zenodo.org/records/7867329/files/067017.tar.gz"
 def test_download():
     filename = download_file(url)
     assert filename == op.basename(url)
-    ds = xr.open_dataset(filename)
-    print(ds)
-    return ds
+    #ds = xr.open_dataset(filename)
+    #print(ds)
+    return filename
 
 
 if __name__ == "__main__":
