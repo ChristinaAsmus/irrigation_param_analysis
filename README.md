@@ -3,7 +3,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7889385.svg)](https://doi.org/10.5281/zenodo.7889385)
 [![test](https://github.com/christinaasmus/irrigation_param_analysis/actions/workflows/test.yaml/badge.svg)](https://github.com/christinaasmus/irrigation_param_analysis/actions/workflows/test.yaml)
 
-This repository contains the code for the analysis of the irrigation parameterization implemented into REMO2020-iMOVE. 
+This repository contains the code for the analysis of the irrigation parameterization implemented into REMO2020-iMOVE.
 
 ## Figure overview
 Figure |  directory | plotting routine
@@ -43,9 +43,10 @@ pip install -e .
 
 ## Data access
 
-To reproduce the analysis, please download the model output data from 
+To reproduce the analysis, please download the model output data from
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7867329.svg)](https://doi.org/10.5281/zenodo.7867329) 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10014915.svg)](https://doi.org/10.5281/zenodo.10014915)
+
 
 using, e.g.,
 
@@ -53,9 +54,10 @@ using, e.g.,
 python download_zenodo.py.
 ```
 
-The observational data for the analysis in 
+The observational data for the analysis in
 
 * `/compare_obs/Tab3_Eval_Scia_t2m.py`
-* `/appendix/C1_station_locations_spatial_scatter.py` 
+* `/appendix/C1_station_locations_spatial_scatter.py`
 
-can be downloaded from [serverstazioni](http://193.206.192.214/serverstazioni/stazioni400.php).
+was originally downloaded from [serverstazioni](http://193.206.192.214/serverstazioni/stazioni400.php).
+It is included in V2 from https://doi.org/10.5281/zenodo.10014915
