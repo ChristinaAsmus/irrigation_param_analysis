@@ -3,7 +3,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7889385.svg)](https://doi.org/10.5281/zenodo.7889385)
 [![test](https://github.com/christinaasmus/irrigation_param_analysis/actions/workflows/test.yaml/badge.svg)](https://github.com/christinaasmus/irrigation_param_analysis/actions/workflows/test.yaml)
 
-This repository contains the code for the analysis of the irrigation parameterization implemented into REMO2020-iMOVE.
+This repository contains the code for the analysis of the irrigation parameterization implemented into REMO2020-iMOVE[^1].
 
 ## Figure overview
 Figure |  directory | plotting routine
@@ -61,3 +61,5 @@ The observational data for the analysis in
 
 was originally downloaded from [serverstazioni](http://193.206.192.214/serverstazioni/stazioni400.php).
 It is included in V2 from https://doi.org/10.5281/zenodo.10014915
+
+[^1]: Asmus, C., Hoffmann, P., Pietikäinen, J.-P., Böhner, J., and Rechid, D.: Modeling and evaluating the effects of irrigation on land–atmosphere interaction in southwestern Europe with the regional climate model REMO2020–iMOVE using a newly developed parameterization, Geosci. Model Dev., 16, 7311–7337, https://doi.org/10.5194/gmd-16-7311-2023, 2023.
